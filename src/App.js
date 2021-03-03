@@ -6,6 +6,7 @@ function App() {
 
   const [query, setQuery] = useState('')
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const onChange = async evt => setQuery(evt.target.value)
 
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
       <header className="App-header">
       <TextField
+        variant='outlined'
         onChange={onChange}
         value={query}
         color='primary'

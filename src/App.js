@@ -1,20 +1,28 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { TextField } from '@material-ui/core'
+import axios from 'axios'
 
 function App() {
 
   const [query, setQuery] = useState('')
   const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
 
   const onChange = async evt => setQuery(evt.target.value)
 
   useEffect(async _ => {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${query}`)
-      .then(res => res.json())
-      console.log('RESPONSE',response)
-    setData(response)
+    if (query) {
+      await axios.post('http://localhost:3334/api/v1/search/', {
+        search: query
+      }, {
+        mode: 'no-cors'
+      })
+      .then(res => {
+        setData(res.data)
+      })
+    } else {
+      setData([])
+    }
   }, [query])
 
   return (
@@ -30,7 +38,7 @@ function App() {
         placeholder='...'
       /> {/* text color in App.css: input */}
       <ul>
-        {Array.isArray(data) ? data.map(d => <li key={d.title}>{d.title}</li>) : data.title ? <li>{data.title}</li> : <li>nothing here...</li>}
+        {Array.isArray(data) ? data.map(d => <li key={d.identifier_value}>{d.identifier_value}</li>) : data ? <li>{data}</li> : <li>nothing here...</li>}
         </ul>
       </header>
     </div>

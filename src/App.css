@@ -18,11 +18,16 @@
   color: white;
 }
 
-
 input {
   color: #333 !important;
 }
 
-li {
+div {
   color: #333;
+}
+
+.list {
+  font-size: calc(3px + 2vmin);
+  border: solid 1px red;
+  text-align: left;
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import { TextField } from '@material-ui/core'
 import axios from 'axios'
+import Lister from './components/Lister'
 
 function App() {
 
@@ -37,9 +38,7 @@ function App() {
         label='search'
         placeholder='...'
       /> {/* text color in App.css: input */}
-      <ul>
-        {Array.isArray(data) ? data.map(d => <li key={d.identifier_value}>{d.identifier_value}</li>) : data ? <li>{data}</li> : <li>nothing here...</li>}
-        </ul>
+        <Lister data={data} />
       </header>
     </div>
   )

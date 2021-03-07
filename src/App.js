@@ -13,14 +13,19 @@ function App() {
 
   useEffect(async _ => {
     if (query) {
-      await axios.post('http://localhost:3334/api/v1/search/', {
-        search: query
-      }, {
-        mode: 'no-cors'
-      })
-      .then(res => {
-        setData(res.data)
-      })
+      try {
+        await axios.post('http://localhost:3334/api/v1/search/', {
+          search: query
+        }, {
+          mode: 'no-cors'
+        })
+        .then(res => {
+          setData(res.data)
+        })        
+      } catch(err) {
+        console.warn(err.message)
+        setData([])
+      }
     } else {
       setData([])
     }

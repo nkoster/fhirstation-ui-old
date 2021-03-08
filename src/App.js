@@ -9,10 +9,10 @@ import fhirDepartment from '../src/pix/lego-fhir-station-2.png'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: orange[800],
+      main: green[800],
     },
     secondary: {
-      main: green[700]
+      main: orange[800]
     }  
   }
 })
@@ -47,7 +47,7 @@ const App = _ => {
   useEffect(_ => {
    setTimeout(_ => {
      img.current.style.height = '100px'
-     console.log(img.current.style.height)
+     setTimeout(_ => img.current.style.height = '0', 2000)
    }, 2000)
   }, [])
 

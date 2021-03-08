@@ -1,8 +1,19 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import { TextField } from '@material-ui/core'
+import { TextField, ThemeProvider, createMuiTheme } from '@material-ui/core'
+import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from './components/Lister'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: orange[800],
+    },
+    secondary: {
+      main: green[700]
+    }  }
+})
 
 function App() {
 
@@ -34,15 +45,21 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <TextField
-        variant='outlined'
-        onChange={onChange}
-        value={query}
-        color='primary'
-        type='search'
-        label='search'
-        placeholder='...'
-      /> {/* text color in App.css: input */}
+        <div style={{ width: '100%' }}>
+          <ThemeProvider theme={theme}>
+            <TextField
+              style={{ width: '80%', margin: 20 }}
+              margin='dense'
+              variant='standard'
+              onChange={onChange}
+              value={query}
+              color='primary'
+              type='search'
+              label='search'
+              placeholder='...'
+            /> {/* text color in App.css: input */}
+          </ThemeProvider>
+        </div>
         <Lister data={data} />
       </header>
     </div>

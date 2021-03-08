@@ -12,7 +12,8 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: green[700]
-    }  }
+    }  
+  }
 })
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div style={{ width: '100%' }}>
+          <div style={{ display: 'inline-block' }}></div>
           <ThemeProvider theme={theme}>
             <TextField
               style={{ width: '80%', margin: 20 }}

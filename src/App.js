@@ -16,12 +16,12 @@ const theme = createMuiTheme({
   }
 })
 
-function App() {
+const App = _ => {
 
   const [query, setQuery] = useState('')
   const [data, setData] = useState([])
 
-  const onChange = async evt => setQuery(evt.target.value)
+  const onChange = evt => setQuery(evt.target.value)
 
   useEffect(async _ => {
     if (query) {

@@ -4,8 +4,8 @@ import { DataGrid } from '@material-ui/data-grid'
 const columns = [
   { field: 'kafka_topic', headerName: 'Kafka Topic', flex: 1 },
   { field: 'kafka_offset', headerName: 'Kafka Offset', width: 200 },
-  { field: 'identifier_type', headerName: 'Type', width: 200 },
-  { field: 'identifier_value', headerName: 'Value', width: 300 },
+  { field: 'identifier_type', headerName: 'Identifier Type', width: 200 },
+  { field: 'identifier_value', headerName: 'Identifier Value', width: 300 },
 ]
 
 const Lister = ({data}) => {

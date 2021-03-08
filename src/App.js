@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import { TextField, ThemeProvider, createMuiTheme } from '@material-ui/core'
 import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from './components/Lister'
+import fhirDepartment from '../src/pix/lego-fhir-station-2.png'
 
 const theme = createMuiTheme({
   palette: {
@@ -20,7 +21,7 @@ const App = _ => {
 
   const [query, setQuery] = useState('')
   const [data, setData] = useState([])
-
+  const img = useRef()
   const onChange = evt => setQuery(evt.target.value)
 
   useEffect(async _ => {
@@ -43,11 +44,20 @@ const App = _ => {
     }
   }, [query])
 
+  useEffect(_ => {
+   setTimeout(_ => {
+     img.current.style.height = '100px'
+     console.log(img.current.style.height)
+   }, 2000)
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
         <div style={{ width: '100%' }}>
-          <div style={{ display: 'inline-block' }}></div>
+          <div style={{ display: 'inline-block' }}>
+            <img ref={img} style={imgStyle} src={fhirDepartment} alt='FHIR department' />
+          </div>
           <ThemeProvider theme={theme}>
             <TextField
               style={{ width: '80%', margin: 20 }}
@@ -67,6 +77,11 @@ const App = _ => {
     </div>
   )
 
+}
+
+const imgStyle = {
+  height: 700,
+  transition: 'height 0.5s'
 }
 
 export default App

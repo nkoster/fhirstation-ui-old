@@ -32,6 +32,7 @@ const App = _ => {
   useEffect(_ => {
     const timeout = setTimeout(async _ => {
       if (query) {
+        localStorage.setItem('query', query)
         try {
           setLoading(true)
           await axios.post('http://localhost:3334/api/v1/search/', {
@@ -56,10 +57,11 @@ const App = _ => {
   }, [query])
   
   useEffect(_ => {
-   setTimeout(_ => {
-     img.current.style.height = '100px'
-     setTimeout(_ => img.current.style.height = '0', 1000)
-   }, 1000)
+    setQuery(localStorage.getItem('query'))
+    setTimeout(_ => {
+      img.current.style.height = '100px'
+      setTimeout(_ => img.current.style.height = '0', 2000)
+    }, 1000)
   }, [])
 
   return (

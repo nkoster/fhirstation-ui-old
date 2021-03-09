@@ -22,7 +22,10 @@ const App = _ => {
   const [query, setQuery] = useState('')
   const [data, setData] = useState([])
   const img = useRef()
-  const onChange = evt => setQuery(evt.target.value)
+  const onChange = evt => {
+    setQuery(evt.target.value)
+    evt.target.value || setData([])
+  }
 
   useEffect(async _ => {
     if (query) {

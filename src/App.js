@@ -37,7 +37,7 @@ const App = _ => {
       if (query) {
         try {
           setLoading(true)
-          await axios.post('http://localhost:3334/api/v1/search/', {
+          await axios.post('http://localhost:3333/api/v1/search/', {
             search: query
           }, {
             mode: 'no-cors'
@@ -95,6 +95,7 @@ const App = _ => {
 }
 
 const imgStyle = {
+  padding: 0, margin: 0,
   height: 700,
   transition: 'height 0.5s'
 }

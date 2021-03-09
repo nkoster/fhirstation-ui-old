@@ -8,12 +8,13 @@ const columns = [
   { field: 'identifier_value', headerName: 'Identifier Value', width: 300 },
 ]
 
-const Lister = ({data}) => {
+const Lister = ({data, limit}) => {
   return (
     <div style={{ height: 500, width: '100%' }}>
-      {data.length > 0 && <DataGrid hideFooter rows={data.map(d => {
+      {(data.length > 0 && data.length < limit) && <DataGrid hideFooter rows={data.map(d => {
         return { ...d, id: Math.random().toString(20)}
       })} columns={columns} />}
+      {data.length >= limit && <p style={{fontSize: 14}}>Too many rows</p>}
     </div>
   )
 }

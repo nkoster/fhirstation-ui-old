@@ -6,6 +6,8 @@ import axios from 'axios'
 import Lister from './components/Lister'
 import fhirDepartment from '../src/pix/lego-fhir-station-2.png'
 
+const LIMIT = 51
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -84,7 +86,7 @@ const App = _ => {
               placeholder='...'
             /> {/* text color in App.css: input */}
           </div>
-          {loading ? <CircularProgress color='primary' /> : <Lister data={data} />}
+          {loading ? <CircularProgress color='primary' /> : <Lister data={data} limit={LIMIT} />}
         </ThemeProvider>
       </header>
     </div>

@@ -64,7 +64,7 @@ const App = _ => {
     const q = localStorage.getItem('query')
     typeof q === 'null' || setQuery(q)
     setTimeout(_ => {
-      img.current.style.height = '80px'
+      img.current.style.height = '300px'
       setTimeout(_ => img.current.style.height = '80px', 2000)
     }, 2000)
   }, [])

@@ -49,6 +49,7 @@ const App = _ => {
           })
         } catch(err) {
           console.warn(err.message)
+          setError('Oh boy... ' + err.message)
           setData([])
           setLoading(false)
         }
@@ -60,10 +61,11 @@ const App = _ => {
   }, [query])
   
   useEffect(_ => {
-    setQuery(localStorage.getItem('query'))
+    const q = localStorage.getItem('query')
+    typeof q === 'null' || setQuery(q)
     setTimeout(_ => {
-      img.current.style.height = '100px'
-      setTimeout(_ => img.current.style.height = '0', 2000)
+      img.current.style.height = '80px'
+      setTimeout(_ => img.current.style.height = '80px', 2000)
     }, 2000)
   }, [])
 
@@ -87,8 +89,8 @@ const App = _ => {
               placeholder='...'
             /> {/* text color in App.css: input */}
           </div>
-          {loading ? <CircularProgress color='primary' /> : <Lister data={data} limit={LIMIT} />}
-          {error && <p>{error}</p>}
+          {loading ? <CircularProgress color='primary' /> : error || <Lister data={data} limit={LIMIT} />}
+          {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
         </ThemeProvider>
       </header>
     </div>

@@ -15,7 +15,7 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: orange[800]
-    }  
+    }
   }
 })
 
@@ -24,6 +24,7 @@ const App = _ => {
   const [query, setQuery] = useState('')
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const img = useRef()
   const onChange = evt => {
@@ -87,6 +88,7 @@ const App = _ => {
             /> {/* text color in App.css: input */}
           </div>
           {loading ? <CircularProgress color='primary' /> : <Lister data={data} limit={LIMIT} />}
+          {error && <p>{error}</p>}
         </ThemeProvider>
       </header>
     </div>

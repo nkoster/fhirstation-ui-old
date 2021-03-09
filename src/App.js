@@ -78,17 +78,17 @@ const App = _ => {
           <div style={{ display: 'inline-block' }}>
             <img ref={img} style={imgStyle} src={fhirDepartment} alt='FHIR department' />
           </div>
-            <TextField
-              style={{ width: '80%', margin: 20 }}
-              margin='dense'
-              variant='standard'
-              onChange={onChange}
-              value={query}
-              color='primary'
-              type='search'
-              label='search'
-              placeholder='...'
-            /> {/* text color in App.css: input */}
+          <TextField
+            style={{ width: '80%', margin: 20 }}
+            margin='dense'
+            variant='standard'
+            onChange={onChange}
+            value={query}
+            color='primary'
+            type='search'
+            label='search'
+            placeholder='...'
+          /> {/* text color in App.css: input */}
           </div>
           {loading ? <CircularProgress color='primary' /> : error || <Lister data={data} limit={LIMIT} />}
           {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}

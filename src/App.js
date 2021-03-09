@@ -29,6 +29,7 @@ const App = _ => {
   const img = useRef()
   const onChange = evt => {
     setQuery(evt.target.value)
+    setError('')
     evt.target.value || setData([])
   }
 

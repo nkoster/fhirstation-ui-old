@@ -5,6 +5,7 @@ import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from './components/Lister'
 import fhirDepartment from '../src/pix/lego-fhir-station-2.png'
+import { ScaleLoader } from 'react-spinners'
 
 const LIMIT = 51
 
@@ -39,7 +40,7 @@ const App = _ => {
       if (query) {
         try {
           setLoading(true)
-          await axios.post('http://niels.portavita.nl:8889/api/v1/search/', {
+          await axios.post('http://localhost:3333/api/v1/search/', {
             search: query
           }, {
             mode: 'no-cors'
@@ -63,7 +64,6 @@ const App = _ => {
   
   useEffect(_ => {
     setQuery(localStorage.getItem('query'))
-    console.log(typeof q)
     setTimeout(_ => {
       img.current.style.height = '80px'
       setTimeout(_ => img.current.style.height = '90px', 2000)
@@ -90,7 +90,7 @@ const App = _ => {
             placeholder='...'
           /> {/* text color in App.css: input */}
           </div>
-          {loading ? <CircularProgress color='primary' /> : error || <Lister data={data} limit={LIMIT} />}
+          {loading ? <ScaleLoader color='#666'/> : error || <Lister data={data} limit={LIMIT} />}
           {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
         </ThemeProvider>
       </header>

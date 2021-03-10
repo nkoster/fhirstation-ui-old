@@ -35,7 +35,7 @@ const App = _ => {
 
   useEffect(_ => {
     const timeout = setTimeout(async _ => {
-      localStorage.setItem('query', query)
+      localStorage.setItem('query', query ? query : '')
       if (query) {
         try {
           setLoading(true)
@@ -62,11 +62,11 @@ const App = _ => {
   }, [query])
   
   useEffect(_ => {
-    const q = localStorage.getItem('query')
-    typeof q === 'null' || setQuery(q)
+    setQuery(localStorage.getItem('query'))
+    console.log(typeof q)
     setTimeout(_ => {
-      img.current.style.height = '300px'
-      setTimeout(_ => img.current.style.height = '80px', 2000)
+      img.current.style.height = '80px'
+      setTimeout(_ => img.current.style.height = '90px', 2000)
     }, 2000)
   }, [])
 

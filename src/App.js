@@ -79,6 +79,7 @@ const App = _ => {
     setQueryKafkaOffset(localStorage.getItem('queryKafkaOffset'))
     setTimeout(_ => {
       img1.current.style.height = '0px'
+      setTimeout(_ => img1.current.style.display = 'none', 1005)
       // if (img2.current) img2.current.style.opacity = '1'
       // setTimeout(_ => img.current.style.height = '0px', 2000)
     }, 1000)
@@ -117,7 +118,7 @@ const App = _ => {
               /> {/* text color in App.css: input */}
             </div>
             {data.length > 0 && <div style={{ display: 'inline-block', paddingTop: '20px', fontSize: '14px' }}>
-              <br />{data.length > 50 ? '50+' : data.length}<br />record{data.length === 1 ? '' : 's'}
+              <br />{data.length > 50 ? '50+' : data.length}<br />row{data.length === 1 ? '' : 's'}
             </div>}
             <div></div>
             {loading ? <ScaleLoader color='orange'/> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}

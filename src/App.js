@@ -9,7 +9,7 @@ import fhirDepartment1 from '../src/pix/fire1.png'
 import fhirDepartment2 from '../src/pix/fire2.png'
 import { ScaleLoader } from 'react-spinners'
 
-const LIMIT = 51
+const LIMIT = 52
 
 const theme = createMuiTheme({
   palette: {
@@ -97,10 +97,10 @@ const App = _ => {
               /> {/* text color in App.css: input */}
             </div>
             {data.length > 0 && <div style={{ display: 'inline-block', paddingTop: '20px', fontSize: '14px' }}>
-              <br />{data.length}<br />record{data.length === 1 ? '' : 's'}
+              <br />{data.length > 50 ? '50+' : data.length}<br />record{data.length === 1 ? '' : 's'}
             </div>}
             <div></div>
-            {loading ? <ScaleLoader color='orange'/> : error || (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
+            {loading ? <ScaleLoader color='orange'/> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
             {data.length === 0 && !loading && !error && query ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
             {query === '' && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR department' /></div>}

@@ -92,6 +92,7 @@ const App = _ => {
           </div>
           {loading ? <ScaleLoader color='#666'/> : error || <Lister data={data} limit={LIMIT} />}
           {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
+          {data.length === 0 && !loading && !error && query ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
         </ThemeProvider>
       </header>
     </div>

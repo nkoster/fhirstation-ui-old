@@ -29,7 +29,9 @@ const App = _ => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const img = useRef()
+  const img1 = useRef()
+  const img2 = useRef()
+
   const onChange = evt => {
     setQuery(evt.target.value)
     setError('')
@@ -67,7 +69,8 @@ const App = _ => {
   useEffect(_ => {
     setQuery(localStorage.getItem('query'))
     setTimeout(_ => {
-      img.current.style.height = '0px'
+      img1.current.style.height = '0px'
+      // if (img2.current) img2.current.style.opacity = '1'
       // setTimeout(_ => img.current.style.height = '0px', 2000)
     }, 1000)
   }, [])
@@ -78,7 +81,7 @@ const App = _ => {
         <ThemeProvider theme={theme}>
           <div style={{ width: '100%' }}>
             <div>
-              <img ref={img} style={fire1Style} src={fhirDepartment1} alt='FHIR department' />
+              <img ref={img1} style={fire1Style} src={fhirDepartment1} alt='FHIR department' />
             </div>
             <div style={{ display: 'inline-block', width: '80%' }}>
               <TextField
@@ -94,13 +97,13 @@ const App = _ => {
               /> {/* text color in App.css: input */}
             </div>
             {data.length > 0 && <div style={{ display: 'inline-block', paddingTop: '20px', fontSize: '14px' }}>
-              <br />{data.length}&nbsp;record{data.length === 1 ? '' : 's'}<br />found
+              <br />{data.length}<br />record{data.length === 1 ? '' : 's'}
             </div>}
             <div></div>
-            {loading ? <ScaleLoader color='#666'/> : error || (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
+            {loading ? <ScaleLoader color='orange'/> : error || (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
             {data.length === 0 && !loading && !error && query ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
-            {query === '' && <div><img style={fire2Style} src={fhirDepartment2} alt='FHIR department' /></div>}
+            {query === '' && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR department' /></div>}
           </div>
         </ThemeProvider>
       </header>
@@ -117,7 +120,8 @@ const fire1Style = {
 
 const fire2Style = {
   padding: 0, margin: 0,
-  height: 300,
+  height: 250,
+  opacity: 1,
   transition: 'opacity 1s'
 }
 

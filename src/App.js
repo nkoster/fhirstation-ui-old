@@ -24,7 +24,8 @@ const theme = createMuiTheme({
 
 const App = _ => {
 
-  const [query, setQuery] = useState('')
+  const [queryIdentifierValue, setQueryIdentifierValue] = useState('')
+  const [queryKafkaOffset, setQueryKafkaOffset] = useState('')
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -32,20 +33,26 @@ const App = _ => {
   const img1 = useRef()
   const img2 = useRef()
 
-  const onChange = evt => {
-    setQuery(evt.target.value)
+  const onChangeIdentifierValue = evt => {
+    setQueryIdentifierValue(evt.target.value)
+    setError('')
+    evt.target.value || setData([])
+  }
+
+  const onChangeKafkaOffset = evt => {
+    setQueryKafkaOffset(evt.target.value)
     setError('')
     evt.target.value || setData([])
   }
 
   useEffect(_ => {
     const timeout = setTimeout(async _ => {
-      localStorage.setItem('query', query ? query : '')
-      if (query) {
+      localStorage.setItem('queryIdentifierValue', queryIdentifierValue ? queryIdentifierValue : '')
+      if (queryIdentifierValue) {
         try {
           setLoading(true)
-          await axios.post('https://api.fhirstation.net/api/v1/search/', {
-            search: query
+          await axios.post('http://localhost:3333/api/v1/search/', {
+            search: { queryIdentifierValue, queryKafkaOffset }
           }, {
             mode: 'no-cors'
           })
@@ -64,10 +71,10 @@ const App = _ => {
       }
     }, 250)
     return _ => clearTimeout(timeout)
-  }, [query])
+  }, [queryIdentifierValue, queryKafkaOffset])
   
   useEffect(_ => {
-    setQuery(localStorage.getItem('query'))
+    setQueryIdentifierValue(localStorage.getItem('queryIdentifierValue'))
     setTimeout(_ => {
       img1.current.style.height = '0px'
       // if (img2.current) img2.current.style.opacity = '1'
@@ -83,16 +90,27 @@ const App = _ => {
             <div>
               <img ref={img1} style={fire1Style} src={fhirDepartment1} alt='FHIR department' />
             </div>
-            <div style={{ display: 'inline-block', width: '80%' }}>
+            <div style={{ display: 'inline-flex', width: '90%' }}>
               <TextField
-                style={{ width: '100%', margin: 20 }}
+                style={{ flex: '1', margin: 10 }}
                 margin='dense'
                 variant='standard'
-                onChange={onChange}
-                value={query}
+                onChange={onChangeIdentifierValue}
+                value={queryIdentifierValue}
                 color='primary'
                 type='search'
-                label='search'
+                label='Search Identifier Value'
+                placeholder='...'
+              /> {/* text color in App.css: input */}
+              <TextField
+                style={{ flex: '1', margin: 10 }}
+                margin='dense'
+                variant='standard'
+                onChange={onChangeKafkaOffset}
+                value={queryKafkaOffset}
+                color='primary'
+                type='search'
+                label='Search Kafka Offset'
                 placeholder='...'
               /> {/* text color in App.css: input */}
             </div>
@@ -102,8 +120,8 @@ const App = _ => {
             <div></div>
             {loading ? <ScaleLoader color='orange'/> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && query ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
-            {query === '' && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR department' /></div>}
+            {data.length === 0 && !loading && !error && queryIdentifierValue ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
+            {queryIdentifierValue === '' && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR department' /></div>}
           </div>
         </ThemeProvider>
       </header>

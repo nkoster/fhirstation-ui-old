@@ -4,7 +4,9 @@ import { TextField, ThemeProvider, createMuiTheme, CircularProgress } from '@mat
 import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from './components/Lister'
-import fhirDepartment from '../src/pix/lego-fhir-station-2.png'
+// import fhirDepartment from '../src/pix/lego-fhir-station-2.png'
+import fhirDepartment1 from '../src/pix/fire1.png'
+import fhirDepartment2 from '../src/pix/fire2.png'
 import { ScaleLoader } from 'react-spinners'
 
 const LIMIT = 51
@@ -12,7 +14,7 @@ const LIMIT = 51
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: green[800],
+      main: orange[800],
     },
     secondary: {
       main: orange[800]
@@ -65,34 +67,41 @@ const App = _ => {
   useEffect(_ => {
     setQuery(localStorage.getItem('query'))
     setTimeout(_ => {
-      img.current.style.height = '80px'
-      setTimeout(_ => img.current.style.height = '90px', 2000)
-    }, 2000)
+      img.current.style.height = '0px'
+      // setTimeout(_ => img.current.style.height = '0px', 2000)
+    }, 1000)
   }, [])
 
   return (
     <div className="App">
       <header className="App-header">
-      <ThemeProvider theme={theme}>
-        <div style={{ width: '100%' }}>
-          <div style={{ display: 'inline-block' }}>
-            <img ref={img} style={imgStyle} src={fhirDepartment} alt='FHIR department' />
+        <ThemeProvider theme={theme}>
+          <div style={{ width: '100%' }}>
+            <div>
+              <img ref={img} style={fire1Style} src={fhirDepartment1} alt='FHIR department' />
+            </div>
+            <div style={{ display: 'inline-block', width: '80%' }}>
+              <TextField
+                style={{ width: '100%', margin: 20 }}
+                margin='dense'
+                variant='standard'
+                onChange={onChange}
+                value={query}
+                color='primary'
+                type='search'
+                label='search'
+                placeholder='...'
+              /> {/* text color in App.css: input */}
+            </div>
+            {data.length > 0 && <div style={{ display: 'inline-block', paddingTop: '20px', fontSize: '14px' }}>
+              <br />{data.length}&nbsp;record{data.length === 1 ? '' : 's'}<br />found
+            </div>}
+            <div></div>
+            {loading ? <ScaleLoader color='#666'/> : error || (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
+            {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
+            {data.length === 0 && !loading && !error && query ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
+            {query === '' && <div><img style={fire2Style} src={fhirDepartment2} alt='FHIR department' /></div>}
           </div>
-          <TextField
-            style={{ width: '80%', margin: 20 }}
-            margin='dense'
-            variant='standard'
-            onChange={onChange}
-            value={query}
-            color='primary'
-            type='search'
-            label='search'
-            placeholder='...'
-          /> {/* text color in App.css: input */}
-          </div>
-          {loading ? <ScaleLoader color='#666'/> : error || (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
-          {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-          {data.length === 0 && !loading && !error && query ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
         </ThemeProvider>
       </header>
     </div>
@@ -100,10 +109,16 @@ const App = _ => {
 
 }
 
-const imgStyle = {
+const fire1Style = {
   padding: 0, margin: 0,
-  height: 700,
-  transition: 'height 0.5s'
+  height: 300,
+  transition: 'height 1s'
+}
+
+const fire2Style = {
+  padding: 0, margin: 0,
+  height: 300,
+  transition: 'opacity 1s'
 }
 
 export default App

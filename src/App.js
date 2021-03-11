@@ -49,7 +49,7 @@ const App = _ => {
     const timeout = setTimeout(async _ => {
       localStorage.setItem('queryIdentifierValue', queryIdentifierValue ? queryIdentifierValue : '')
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
-      if (queryIdentifierValue) {
+      if (queryIdentifierValue || queryKafkaOffset) {
         try {
           setLoading(true)
           await axios.post('http://localhost:3333/api/v1/search/', {

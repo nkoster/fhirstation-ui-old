@@ -40,7 +40,7 @@ const App = _ => {
       if (query) {
         try {
           setLoading(true)
-          await axios.post('http://localhost:3333/api/v1/search/', {
+          await axios.post('https://api.fhirstation.net/api/v1/search/', {
             search: query
           }, {
             mode: 'no-cors'

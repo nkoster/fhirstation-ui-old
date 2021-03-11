@@ -36,18 +36,19 @@ const App = _ => {
   const onChangeIdentifierValue = evt => {
     setQueryIdentifierValue(evt.target.value)
     setError('')
-    evt.target.value || setData([])
+    // evt.target.value || setData([])
   }
 
   const onChangeKafkaOffset = evt => {
     setQueryKafkaOffset(evt.target.value)
     setError('')
-    evt.target.value || setData([])
+    // evt.target.value || setData([])
   }
 
   useEffect(_ => {
     const timeout = setTimeout(async _ => {
       localStorage.setItem('queryIdentifierValue', queryIdentifierValue ? queryIdentifierValue : '')
+      localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       if (queryIdentifierValue) {
         try {
           setLoading(true)
@@ -75,6 +76,7 @@ const App = _ => {
   
   useEffect(_ => {
     setQueryIdentifierValue(localStorage.getItem('queryIdentifierValue'))
+    setQueryKafkaOffset(localStorage.getItem('queryKafkaOffset'))
     setTimeout(_ => {
       img1.current.style.height = '0px'
       // if (img2.current) img2.current.style.opacity = '1'

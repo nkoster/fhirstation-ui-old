@@ -123,8 +123,8 @@ const App = _ => {
             <div></div>
             {loading ? <ScaleLoader color='orange'/> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && queryIdentifierValue ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
-            {queryIdentifierValue === '' && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR department' /></div>}
+            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset) ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
+            {(!queryIdentifierValue && !queryKafkaOffset) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
           </div>
         </ThemeProvider>
       </header>

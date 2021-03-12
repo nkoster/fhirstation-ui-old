@@ -26,6 +26,8 @@ const App = _ => {
   const [queryIdentifierValue, setQueryIdentifierValue] = useState('')
   const [queryKafkaOffset, setQueryKafkaOffset] = useState('')
   const [queryKafkaTopic, setQueryKafkaTopic] = useState('')
+  const [queryIdentifierType, setQueryIdentifierType] = useState('')
+
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -48,16 +50,22 @@ const App = _ => {
     setError('')
   }
 
+  const onChangeIdentifierType = evt => {
+    setQueryIdentifierType(evt.target.value)
+    setError('')
+  }
+
   useEffect(_ => {
     const timeout = setTimeout(async _ => {
       localStorage.setItem('queryIdentifierValue', queryIdentifierValue ? queryIdentifierValue : '')
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       localStorage.setItem('queryKafkaTopic', queryKafkaTopic ? queryKafkaTopic : '')
-      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic) {
+      localStorage.setItem('queryIdentifierType', queryIdentifierType ? queryIdentifierType : '')
+      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) {
         try {
           setLoading(true)
           await axios.post('http://localhost:3333/api/v1/search/', {
-            search: { queryIdentifierValue, queryKafkaOffset, queryKafkaTopic }
+            search: { queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType }
           }, {
             mode: 'no-cors'
           })
@@ -76,12 +84,13 @@ const App = _ => {
       }
     }, 250)
     return _ => clearTimeout(timeout)
-  }, [queryIdentifierValue, queryKafkaOffset, queryKafkaTopic])
+  }, [queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType])
   
   useEffect(_ => {
     setQueryIdentifierValue(localStorage.getItem('queryIdentifierValue'))
     setQueryKafkaOffset(localStorage.getItem('queryKafkaOffset'))
     setQueryKafkaTopic(localStorage.getItem('queryKafkaTopic'))
+    setQueryIdentifierType(localStorage.getItem('queryIdentifierType'))
     setTimeout(_ => {
       img1.current.style.height = '0px'
       setTimeout(_ => img1.current.style.display = 'none', 1005)
@@ -123,6 +132,17 @@ const App = _ => {
                 style={{ flex: '1', margin: 10 }}
                 margin='dense'
                 variant='standard'
+                onChange={onChangeIdentifierType}
+                value={queryIdentifierType}
+                color='primary'
+                type='search'
+                label='Search Identifier Type'
+                placeholder='...'
+              /> {/* text color in App.css: input */}
+              <TextField
+                style={{ flex: '1', margin: 10 }}
+                margin='dense'
+                variant='standard'
                 onChange={onChangeIdentifierValue}
                 value={queryIdentifierValue}
                 color='primary'
@@ -137,8 +157,8 @@ const App = _ => {
             <div></div>
             {loading ? <ScaleLoader color='orange'/> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic) ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
-            {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
+            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
+            {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
           </div>
         </ThemeProvider>
       </header>

@@ -1,9 +1,18 @@
 import React from 'react'
 import { DataGrid } from '@material-ui/data-grid'
 
+const renderCell = data => {
+  return (
+    <div
+      onClick={_ => alert(data.row.kafka_topic)}
+      style={{cursor: 'pointer'}}
+    >{data.row.kafka_offset}</div>
+  )
+}
+
 const columns = [
   { field: 'kafka_topic', headerName: 'Kafka Topic', flex: 1 },
-  { field: 'kafka_offset', headerName: 'Kafka Offset', flex: 0.4 },
+  { field: 'kafka_offset', headerName: 'Kafka Offset', flex: 0.4, renderCell },
   { field: 'identifier_type', headerName: 'Identifier Type', flex: 0.6 },
   { field: 'identifier_value', headerName: 'Identifier Value', flex: 1 },
 ]

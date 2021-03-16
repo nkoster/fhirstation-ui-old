@@ -105,7 +105,7 @@ const App = _ => {
             <div>
               <img ref={img1} style={fire1Style} src={fhirDepartment1} alt='FHIR department' />
             </div>
-            <div style={{ display: 'inline-flex', width: '90%' }}>
+            <div style={{ display: 'inline-flex', width: '90%', paddingBottom: '12px' }}>
               <TextField
                 style={{ flex: '1', margin: 10 }}
                 margin='dense'

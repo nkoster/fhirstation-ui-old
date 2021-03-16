@@ -65,6 +65,7 @@ const App = _ => {
         try {
           setLoading(true)
           await axios.post('https://api.fhirstation.net/api/v1/search/', {
+          // await axios.post('http://localhost:8082/api/v1/search/', {
             search: { queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType }
           }, {
             mode: 'no-cors'
@@ -83,6 +84,8 @@ const App = _ => {
         setData([])
       }
     }, 250)
+    if (!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType)
+      setLoading(false)
     return _ => clearTimeout(timeout)
   }, [queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType])
   

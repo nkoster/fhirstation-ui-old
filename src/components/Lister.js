@@ -1,10 +1,15 @@
 import React from 'react'
 import { DataGrid } from '@material-ui/data-grid'
+import { useHistory } from 'react-router-dom'
 
 const renderCell = data => {
+  const history = useHistory()
+  const onClick = _ => {
+    history.push(`/details/${data.row.kafka_topic}/${data.row.kafka_offset}`)
+  }
   return (
     <div
-      onClick={_ => alert(data.row.kafka_topic)}
+      onClick={onClick}
       style={{cursor: 'pointer'}}
     >{data.row.kafka_offset}</div>
   )

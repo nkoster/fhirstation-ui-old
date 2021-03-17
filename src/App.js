@@ -82,8 +82,6 @@ const App = _ => {
           })
         } catch(err) {
           console.warn(err.message)
-          // setError('Oh boy... ' + err.message)
-          // setData([])
           setLoading(false)
         }
       } else {

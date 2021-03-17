@@ -23,9 +23,10 @@ const theme = createMuiTheme({
 
 const cancelTokenSource = axios.CancelToken.source()
 
+const queryId = Math.random().toString(20).substr(2)
+
 const App = _ => {
 
-  const queryId = Math.random().toString(20)
   const [queryIdentifierValue, setQueryIdentifierValue] = useState('')
   const [queryKafkaOffset, setQueryKafkaOffset] = useState('')
   const [queryKafkaTopic, setQueryKafkaTopic] = useState('')
@@ -64,12 +65,14 @@ const App = _ => {
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       localStorage.setItem('queryKafkaTopic', queryKafkaTopic ? queryKafkaTopic : '')
       localStorage.setItem('queryIdentifierType', queryIdentifierType ? queryIdentifierType : '')
-      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) {
+      if (
+          queryIdentifierValue.length > 2 || queryKafkaOffset.length > 2 ||
+          queryKafkaTopic.length > 2 || queryIdentifierType.length > 2
+        ) {
         cancelTokenSource.cancel()
         try {
           setLoading(true)
           await axios.post('https://api.fhirstation.net/api/v1/search/', {
-          // await axios.post('http://localhost:8082/api/v1/search/', {
             cancelToken: cancelTokenSource.token,
             search: { queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType },
             queryId

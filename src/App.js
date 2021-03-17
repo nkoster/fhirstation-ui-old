@@ -65,10 +65,7 @@ const App = _ => {
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       localStorage.setItem('queryKafkaTopic', queryKafkaTopic ? queryKafkaTopic : '')
       localStorage.setItem('queryIdentifierType', queryIdentifierType ? queryIdentifierType : '')
-      if (
-          queryIdentifierValue.length > 2 || queryKafkaOffset.length > 2 ||
-          queryKafkaTopic.length > 2 || queryIdentifierType.length > 2
-        ) {
+      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) {
         cancelTokenSource.cancel()
         try {
           setLoading(true)
@@ -85,14 +82,15 @@ const App = _ => {
           })
         } catch(err) {
           console.warn(err.message)
-          setError('Oh boy... ' + err.message)
-          setData([])
+          // setError('Oh boy... ' + err.message)
+          // setData([])
           setLoading(false)
         }
       } else {
+        setLoading(false)
         setData([])
       }
-    }, 250)
+    }, 500)
     if (!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType)
       setLoading(false)
     return _ => clearTimeout(timeout)

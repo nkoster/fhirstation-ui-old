@@ -5,7 +5,13 @@ import { useHistory } from 'react-router-dom'
 const renderCell = data => {
   const history = useHistory()
   const onClick = _ => {
-    history.push(`/details/${data.row.kafka_topic}/${data.row.kafka_offset}`)
+    history.push({
+      pathname: `/details/${data.row.kafka_topic}/${data.row.kafka_offset}`,
+      state: {
+        identifierType: data.row.identifier_type,
+        identifierValue: data.row.identifier_value
+      }
+    })
   }
   return (
     <div

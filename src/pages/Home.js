@@ -4,10 +4,9 @@ import { TextField, ThemeProvider, createMuiTheme } from '@material-ui/core'
 import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from '../components/Lister'
-import fhirDepartment1 from '../../src/pix/fire1.png'
 import fhirDepartment2 from '../../src/pix/fire2.png'
 import { ScaleLoader } from 'react-spinners'
-import { Route } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
 import Details from '../pages/Details'
 
 const LIMIT = 52
@@ -40,6 +39,8 @@ const Home = _ => {
 
   const img1 = useRef()
   const img2 = useRef()
+
+  const location = useLocation()
 
   const onChangeIdentifierValue = evt => {
     setQueryIdentifierValue(evt.target.value)
@@ -97,26 +98,19 @@ const Home = _ => {
   }, [queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType])
   
   useEffect(_ => {
-    console.log(data.length)
     setQueryIdentifierValue(localStorage.getItem('queryIdentifierValue'))
     setQueryKafkaOffset(localStorage.getItem('queryKafkaOffset'))
     setQueryKafkaTopic(localStorage.getItem('queryKafkaTopic'))
     setQueryIdentifierType(localStorage.getItem('queryIdentifierType'))
-    setTimeout(_ => {
-      img1.current.style.height = '0px'
-      setTimeout(_ => img1.current.style.display = 'none', 1005)
-    }, 1000)
   }, [])
 
   return (
     <div className="App">
       <Route path="/details/:topic/:offset" component={Details} />
+      {location.pathname === '/' &&
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div style={{ width: '100%' }}>
-            <div>
-              <img ref={img1} style={fire1Style} src={fhirDepartment1} alt='FHIR department' />
-            </div>
             <div style={{ display: 'inline-flex', width: '90%', paddingBottom: '12px' }}>
               <TextField
                 style={{ flex: '1', margin: 10 }}
@@ -173,7 +167,7 @@ const Home = _ => {
             {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
           </div>
         </ThemeProvider>
-      </header>
+      </header>}
     </div>
   )
 

@@ -7,6 +7,8 @@ import Lister from '../components/Lister'
 import fhirDepartment1 from '../../src/pix/fire1.png'
 import fhirDepartment2 from '../../src/pix/fire2.png'
 import { ScaleLoader } from 'react-spinners'
+import { Route } from 'react-router-dom'
+import Details from '../pages/Details'
 
 const LIMIT = 52
 
@@ -95,6 +97,7 @@ const Home = _ => {
   }, [queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType])
   
   useEffect(_ => {
+    console.log(data.length)
     setQueryIdentifierValue(localStorage.getItem('queryIdentifierValue'))
     setQueryKafkaOffset(localStorage.getItem('queryKafkaOffset'))
     setQueryKafkaTopic(localStorage.getItem('queryKafkaTopic'))
@@ -107,6 +110,7 @@ const Home = _ => {
 
   return (
     <div className="App">
+      <Route path="/details/:topic/:offset" component={Details} />
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div style={{ width: '100%' }}>

@@ -5,9 +5,9 @@ import { useHistory } from 'react-router-dom'
 const Lister = ({data, limit}) => {
 
   const history = useHistory()
-  const renderCell = data => {
   
-    const onClick = _ => {
+  const renderCell = data => {
+      const onClick = _ => {
       history.push({
         pathname: `/details/${data.row.kafka_topic}/${data.row.kafka_offset}`,
         state: {

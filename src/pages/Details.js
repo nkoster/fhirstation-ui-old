@@ -37,19 +37,16 @@ const Details = props => {
     }
   }, [])
 
-  const aap = JSON.stringify(data, null, 2)
-  console.log(aap)
-
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h2 style={{ flex: 1 }}>{topic} / {offset}</h2>
-          {loading ? <div><ScaleLoader /><br />please wait, loading from kafka...</div> :
+          {loading ? <div><ScaleLoader color='orange'/><br />please wait, loading from kafka...</div> :
           <table style={{ flex: 1 }}>
             <thead>
               <tr>
-                <th style={{borderBottom: '1px solid #999' }}>topic</th>
+                <th style={{borderBottom: '1px solid #999' }}>key</th>
                 <th style={{borderBottom: '1px solid #999' }}>partition</th>
                 <th style={{borderBottom: '1px solid #999' }}>offset</th>
                 <th style={{borderBottom: '1px solid #999' }}>highWatermark</th>
@@ -57,7 +54,7 @@ const Details = props => {
             </thead>
             <tbody>
               <tr>
-                <td>{data.topic}</td>
+                <td>{data?.message?.key}</td>
                 <td>{data.partition}</td>
                 <td>{data?.message?.offset}</td>
                 <td>{data.highWatermark}</td>
@@ -65,11 +62,13 @@ const Details = props => {
             </tbody>
           </table>}
           <div style={{ flex: 1, marginTop: 20 }}>
-            <h4>raw message data:</h4>
             {loading || 
-              <pre style={pre}>
-                {JSON.stringify(messageObj, null, 2)}
-              </pre>}
+              <div>
+                <h4>raw message value:</h4>
+                <pre style={pre}>
+                  {JSON.stringify(messageObj, null, 2)}
+                </pre>
+              </div>}
           </div>
         </div>
       </div>

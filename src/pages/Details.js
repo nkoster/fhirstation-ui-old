@@ -12,8 +12,8 @@ const Details = props => {
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
   const { topic, offset } = props.match.params
-  const { identifierType } = props.location.state || {}
-  const { identifierValue } = props.location.state || {}
+  // const { identifierType } = props.location.state || {}
+  // const { identifierValue } = props.location.state || {}
 
   useEffect(async _ => {
     try {
@@ -26,8 +26,9 @@ const Details = props => {
       })
       .then(res => {
         setData(res.data)
+        // setMessage(JSON.stringify(res.data.message))
         setMessage(JSON.stringify(res.data.message))
-        setMessageObj(res.data.message)
+        setMessageObj(JSON.parse(res.data.message.value))
         setLoading(false)
       })
     } catch(err) {
@@ -36,8 +37,11 @@ const Details = props => {
     }
   }, [])
 
+  const aap = JSON.stringify(data, null, 2)
+  console.log(aap)
+
   return (
-    <div style={{display: 'flex', justifyContent: 'center', height: '94vh'}}>
+    <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h2 style={{ flex: 1 }}>{topic} / {offset}</h2>
@@ -45,9 +49,9 @@ const Details = props => {
           <table style={{ flex: 1 }}>
             <thead>
               <tr>
-                <th style={{borderBottom: '1px solid #999', borderRight: '1px solid #999' }}>topic</th>
-                <th style={{borderBottom: '1px solid #999', borderRight: '1px solid #999' }}>partition</th>
-                <th style={{borderBottom: '1px solid #999', borderRight: '1px solid #999' }}>offset</th>
+                <th style={{borderBottom: '1px solid #999' }}>topic</th>
+                <th style={{borderBottom: '1px solid #999' }}>partition</th>
+                <th style={{borderBottom: '1px solid #999' }}>offset</th>
                 <th style={{borderBottom: '1px solid #999' }}>highWatermark</th>
               </tr>
             </thead>
@@ -55,17 +59,29 @@ const Details = props => {
               <tr>
                 <td>{data.topic}</td>
                 <td>{data.partition}</td>
-                <td>{messageObj.offset}</td>
+                <td>{data?.message?.offset}</td>
                 <td>{data.highWatermark}</td>
               </tr>
             </tbody>
-          </table>
-          }
-          <div style={{ flex: 1, marginTop: 20 }}>{loading || message}</div>
+          </table>}
+          <div style={{ flex: 1, marginTop: 20 }}>
+            <h4>raw message data:</h4>
+            {loading || 
+              <pre style={pre}>
+                {JSON.stringify(messageObj, null, 2)}
+              </pre>}
+          </div>
         </div>
       </div>
     </div>
   )
+}
+
+const pre = {
+  padding: '10px',
+  textAlign: 'left',
+  fontSize: '14px',
+  fontWeight: 'bold'
 }
 
 export default Details

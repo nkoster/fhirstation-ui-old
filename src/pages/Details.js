@@ -42,7 +42,7 @@ const Details = props => {
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h2 style={{ flex: 1 }}>{topic} / {offset}</h2>
-          {loading ? <div><ScaleLoader color='orange'/><br />please wait, loading from kafka...</div> :
+          {loading ? <div><ScaleLoader color='orange'/><p>please wait, loading from kafka...</p></div> :
           <table style={{ flex: 1 }}>
             <thead>
               <tr>
@@ -64,7 +64,7 @@ const Details = props => {
           <div style={{ flex: 1, marginTop: 20 }}>
             {loading || 
               <div>
-                <h4>raw message value:</h4>
+                <h4>raw message:</h4>
                 <pre style={pre}>
                   {JSON.stringify(messageObj, null, 2)}
                 </pre>
@@ -77,9 +77,9 @@ const Details = props => {
 }
 
 const pre = {
-  padding: '10px',
+  padding: '5px',
   textAlign: 'left',
-  fontSize: '14px',
+  fontSize: '13px',
   fontWeight: 'bold'
 }
 

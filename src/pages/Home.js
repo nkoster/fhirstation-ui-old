@@ -122,7 +122,8 @@ const Home = _ => {
                 type='search'
                 label='Search Kafka Topic'
                 placeholder='...'
-              /> {/* text color in App.css: input */}
+                spellCheck={false}
+                /> {/* text color in App.css: input */}
               <TextField
                 style={{ flex: '1', margin: 10 }}
                 margin='dense'
@@ -133,6 +134,7 @@ const Home = _ => {
                 type='search'
                 label='Search Kafka Offset'
                 placeholder='...'
+                spellCheck={false}
               /> {/* text color in App.css: input */}
               <TextField
                 style={{ flex: '1', margin: 10 }}
@@ -144,7 +146,8 @@ const Home = _ => {
                 type='search'
                 label='Search Identifier Type'
                 placeholder='...'
-              /> {/* text color in App.css: input */}
+                spellCheck={false}
+                /> {/* text color in App.css: input */}
               <TextField
                 style={{ flex: '1', margin: 10 }}
                 margin='dense'
@@ -155,7 +158,8 @@ const Home = _ => {
                 type='search'
                 label='Search Identifier Value'
                 placeholder='...'
-              /> {/* text color in App.css: input */}
+                spellCheck={false}
+                /> {/* text color in App.css: input */}
             </div>
             {data.length > 0 && <div style={{ display: 'inline-block', paddingTop: '20px', fontSize: '14px' }}>
               <br />{data.length > 50 ? '50+' : data.length}<br />row{data.length === 1 ? '' : 's'}

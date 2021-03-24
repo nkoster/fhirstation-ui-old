@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
-// import { cancelTokenSource } from 'axios'
+import { cancelTokenSource } from 'axios'
 import './Details.css'
 
 const Details = props => {
@@ -12,8 +12,6 @@ const Details = props => {
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
   const { topic, offset } = props.match.params
-  // const { identifierType } = props.location.state || {}
-  // const { identifierValue } = props.location.state || {}
 
   useEffect(async _ => {
     try {
@@ -26,7 +24,6 @@ const Details = props => {
       })
       .then(res => {
         setData(res.data)
-        // setMessage(JSON.stringify(res.data.message))
         setMessage(JSON.stringify(res.data.message))
         setMessageObj(JSON.parse(res.data.message.value))
         setLoading(false)

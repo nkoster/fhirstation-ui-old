@@ -4,6 +4,8 @@ import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { cancelTokenSource } from 'axios'
 import './Details.css'
+import { useHistory } from 'react-router-dom'
+import { Tooltip } from '@material-ui/core'
 
 const Details = props => {
 
@@ -12,6 +14,7 @@ const Details = props => {
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
   const { topic, offset } = props.match.params
+  const history = useHistory()
 
   useEffect(async _ => {
     try {
@@ -38,7 +41,9 @@ const Details = props => {
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h3 style={{ flex: 1 }}>{topic} / {offset}</h3>
+          <Tooltip title='go back' arrow>
+            <h3 style={{ flex: 1, justifyContent: 'center', cursor: 'pointer' }} onClick={_ => history.goBack()}><span>↤</span> &nbsp; {topic} / {offset}</h3>
+          </Tooltip>
           {loading ? <div><ScaleLoader color='orange'/><p>please wait, loading from kafka...</p></div> :
           <table style={{ flex: 1 }}>
             <thead>

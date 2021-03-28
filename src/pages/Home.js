@@ -72,12 +72,14 @@ const Home = _ => {
         cancelTokenSource.cancel()
         try {
           setLoading(true)
-          await axios.post('https://api.fhirstation.net/api/v1/search/', {
+            // await axios.post('https://api.fhirstation.net/api/v1/search/', {
+            await axios.post('https://api.fhirstation.net/function/seeker', {
+          // await axios.post('http://192168.67.33:8080/function/seeker', {
             cancelToken: cancelTokenSource.token,
             search: { queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType },
             queryId
           }, {
-            mode: 'no-cors'
+            // mode: 'no-cors'
           })
           .then(res => {
             setData(res.data)

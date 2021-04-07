@@ -2,8 +2,6 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
-import { cancelTokenSource } from 'axios'
-import './Details.css'
 import { useHistory } from 'react-router-dom'
 import { Tooltip } from '@material-ui/core'
 
@@ -19,11 +17,8 @@ const Details = props => {
   useEffect(async _ => {
     try {
       setLoading(true)
-      await axios.post('https://offset.fhirstation.net/api/v1/kafka/', {
-        // cancelToken: cancelTokenSource.token,
+        await axios.post('https://offset.fhirstation.net/function/offsetter', {
         topic, offset
-      }, {
-        mode: 'no-cors'
       })
       .then(res => {
         setData(res.data)

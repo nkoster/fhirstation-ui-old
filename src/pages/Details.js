@@ -8,21 +8,22 @@ import { Tooltip } from '@material-ui/core'
 const Details = props => {
 
   const [ data, setData ] = useState({})
-  const [ message, setMessage ] = useState('')
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
   const { topic, offset } = props.match.params
+  const { partition } = props.location.state
   const history = useHistory()
 
   useEffect(async _ => {
+    const cancelTokenSource = axios.CancelToken.source()
     try {
       setLoading(true)
         await axios.post('https://offset.fhirstation.net/function/offsetter', {
-        topic, offset
+        topic, offset, partition,
+        cancelToken: cancelTokenSource.token
       })
       .then(res => {
         setData(res.data)
-        setMessage(JSON.stringify(res.data.message))
         setMessageObj(JSON.parse(res.data.message.value))
         setLoading(false)
       })

@@ -12,7 +12,8 @@ const Lister = ({data, limit}) => {
         pathname: `/details/${data.row.kafka_topic}/${data.row.kafka_offset}`,
         state: {
           identifierType: data.row.identifier_type,
-          identifierValue: data.row.identifier_value
+          identifierValue: data.row.identifier_value,
+          partition: data.row.kafka_partition
         }
       })
     }

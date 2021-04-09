@@ -26,8 +26,9 @@ const Lister = ({data, limit}) => {
   }
   
   const columns = [
-    { field: 'kafka_topic', headerName: 'Kafka Topic', flex: 1 },
-    { field: 'kafka_offset', headerName: 'Kafka Offset', flex: 0.4, renderCell },
+    { field: 'kafka_topic', headerName: 'Topic', flex: 0.8 },
+    { field: 'kafka_partition', headerName: 'Partition', flex: 0.3 },
+    { field: 'kafka_offset', headerName: 'Offset', flex: 0.3, renderCell },
     { field: 'identifier_type', headerName: 'Identifier Type', flex: 0.6 },
     { field: 'identifier_value', headerName: 'Identifier Value', flex: 1 },
   ]

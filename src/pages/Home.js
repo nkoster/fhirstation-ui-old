@@ -8,6 +8,7 @@ import fhirDepartment2 from '../../src/pix/fire2.png'
 import { ScaleLoader } from 'react-spinners'
 import { Route, useLocation } from 'react-router-dom'
 import Details from '../pages/Details'
+import Timer from '../components/Timer'
 
 const LIMIT = 52
 
@@ -71,7 +72,7 @@ const Home = _ => {
       if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) {
         cancelTokenSource.cancel()
         try {
-          setLoading(true)
+            setLoading(true)
             /* Old API URL, not FaaS: https://api.fhirstation.net/api/v1/search/ */
             await axios.post('https://api.fhirstation.net/function/seeker', {
             cancelToken: cancelTokenSource.token,
@@ -81,6 +82,7 @@ const Home = _ => {
           .then(res => {
             setData(res.data)
             setLoading(false)
+            clearInterval(clock)
           })
         } catch(err) {
           console.warn(err.message)
@@ -91,9 +93,12 @@ const Home = _ => {
         setData([])
       }
     }, 500)
-    if (!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType)
+    if (!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) {
       setLoading(false)
-    return _ => clearTimeout(timeout)
+    }
+    return _ => {
+      clearTimeout(timeout)
+    }
   }, [queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType])
   
   useEffect(_ => {
@@ -164,7 +169,7 @@ const Home = _ => {
               <br />{data.length > 50 ? '50+' : data.length}<br />row{data.length === 1 ? '' : 's'}
             </div>}
             <div></div>
-            {loading ? <ScaleLoader color='orange'/> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
+            {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, querying database... <Timer /></p></div> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
             {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
             {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}

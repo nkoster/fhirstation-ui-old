@@ -4,6 +4,7 @@ import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
 import { Tooltip } from '@material-ui/core'
+import Timer from '../components/Timer'
 
 const Details = props => {
 
@@ -40,7 +41,7 @@ const Details = props => {
           <Tooltip title='go back' arrow>
             <h3 style={{ flex: 1, justifyContent: 'center', cursor: 'pointer' }} onClick={_ => history.goBack()}><span>↤</span> &nbsp; {topic} / {offset}</h3>
           </Tooltip>
-          {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka...</p></div> :
+          {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka... <Timer /></p></div> :
           <table style={{ flex: 1 }}>
             <thead>
               <tr>

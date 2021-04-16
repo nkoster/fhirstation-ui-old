@@ -82,7 +82,6 @@ const Home = _ => {
           .then(res => {
             setData(res.data)
             setLoading(false)
-            clearInterval(clock)
           })
         } catch(err) {
           console.warn(err.message)

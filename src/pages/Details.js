@@ -4,9 +4,17 @@ import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
 import { Tooltip } from '@material-ui/core'
+import { Redirect } from 'react-router-dom'
+
 import Timer from '../components/Timer'
 
 const Details = props => {
+
+  if (!props.location.state) {
+    return (
+      <Redirect to='/' />
+      )
+  }
 
   const [ data, setData ] = useState({})
   const [ messageObj, setMessageObj ] = useState({})

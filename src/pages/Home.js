@@ -25,8 +25,6 @@ const theme = createMuiTheme({
 
 const cancelTokenSource = axios.CancelToken.source()
 
-const queryId = Math.random().toString(20).substr(2)
-
 const Home = _ => {
 
   const [queryIdentifierValue, setQueryIdentifierValue] = useState('')
@@ -34,11 +32,12 @@ const Home = _ => {
   const [queryKafkaTopic, setQueryKafkaTopic] = useState('')
   const [queryIdentifierType, setQueryIdentifierType] = useState('')
 
+  const [queryId] = useState(Math.random().toString(20).substr(2))
+
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const img1 = useRef()
   const img2 = useRef()
 
   const location = useLocation()

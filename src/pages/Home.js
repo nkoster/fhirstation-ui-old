@@ -140,12 +140,12 @@ const Home = _ => {
                   margin='dense'
                   variant='standard'              
               >
-                <InputLabel id='labeltje'>Kafka Topic</InputLabel>
+                <InputLabel id='labeltje'>Search Kafka Topic &nbsp; ({topicList.length - 1})</InputLabel>
                 <Select
                   labelId='labeltje'
                   value={queryKafkaTopic}
                   onChange={onChangeKafkaTopic}
-                  label='Search Kafka Topic'
+                  label={'Search Kafka Topic (' + topicList.length - 1 + ')'}
                   placeholder='Select Kafka Topic'
                 >{topicList.map(topic => {
                   const t = topic === 'none' ? <em>none</em> : topic
@@ -196,7 +196,7 @@ const Home = _ => {
             <div></div>
             {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, querying database... <Timer /></p></div> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ? <p style={{ fontSize: '18px', color: 'black' }}>No records found</p> : null}
+            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ? <p style={{ fontSize: '18px', color: '#333', marginTop: 50 }}>please adjust your search</p> : null}
             {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
           </div>
         </ThemeProvider>

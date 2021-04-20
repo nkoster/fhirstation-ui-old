@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import '../App.css'
-import { TextField, ThemeProvider, createMuiTheme } from '@material-ui/core'
+import { TextField, ThemeProvider, createMuiTheme, NativeSelect } from '@material-ui/core'
 import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from '../components/Lister'
@@ -22,6 +22,22 @@ const theme = createMuiTheme({
     }
   }
 })
+
+const topicList = [
+  'fhir3.databus.portavita.pvt_amstelveen.episodeofcare',
+  'fhir3.databus.portavita.pvt_amstelveen.medication',
+  'fhir3.databus.portavita.pvt_amstelveen.basic',
+  'fhir3.databus.portavita.pvt_amstelveen.encounter',
+  'fhir3.databus.portavita.pvt_amstelveen.patient',
+  'fhir3.databus.portavita.pvt_amstelveen.careteam',
+  'fhir3.databus.portavita.pvt_amstelveen.observation',
+  'fhir3.databus.portavita.pvt_amstelveen.organization',
+  'fhir4.capybara.firefly.medicom.observation',
+  'fhir3.databus.portavita.pvt_amstelveen.coverage',
+  'fhir3.databus.portavita.pvt_amstelveen.communication',
+  'fhir3.databus.portavita.pvt_amstelveen.practitioner',
+  'fhir3.databus.portavita.pvt_amstelveen.practitionerrole'
+]
 
 const cancelTokenSource = axios.CancelToken.source()
 
@@ -114,18 +130,21 @@ const Home = _ => {
         <ThemeProvider theme={theme}>
           <div style={{ width: '100%' }}>
             <div style={{ display: 'inline-flex', width: '90%', paddingBottom: '12px' }}>
-              <TextField
-                style={{ flex: '1', margin: 10 }}
+              <NativeSelect
+                style={{ flex: '1.1', margin: 10 }}
                 margin='dense'
                 variant='standard'
+                defaultValue={30}
+                color='primary'
+                label='Select Kafka Topic'
                 onChange={onChangeKafkaTopic}
                 value={queryKafkaTopic}
-                color='primary'
-                type='search'
-                label='Search Kafka Topic'
-                placeholder='...'
-                spellCheck={false}
-                /> {/* text color in App.css: input */}
+                inputProps={{
+                  name: 'name',
+                  id: 'uncontrolled-native',
+                }}
+                >{topicList.map(topic => <option value={topic}>{topic}</option>)}
+              </NativeSelect>
               <TextField
                 style={{ flex: '1', margin: 10 }}
                 margin='dense'

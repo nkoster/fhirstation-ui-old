@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import '../App.css'
-import { TextField, ThemeProvider, createMuiTheme, NativeSelect } from '@material-ui/core'
+import { TextField, ThemeProvider, createMuiTheme, FormControl, Select, InputLabel, MenuItem } from '@material-ui/core'
 import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from '../components/Lister'
@@ -24,6 +24,7 @@ const theme = createMuiTheme({
 })
 
 const topicList = [
+  'none',
   'fhir3.databus.portavita.pvt_amstelveen.episodeofcare',
   'fhir3.databus.portavita.pvt_amstelveen.medication',
   'fhir3.databus.portavita.pvt_amstelveen.basic',
@@ -91,7 +92,11 @@ const Home = _ => {
             /* Old API URL, not FaaS: https://api.fhirstation.net/api/v1/search/ */
             await axios.post('https://api.fhirstation.net/function/seeker', {
             cancelToken: cancelTokenSource.token,
-            search: { queryIdentifierValue, queryKafkaOffset, queryKafkaTopic, queryIdentifierType },
+            search: {
+              queryIdentifierValue, queryKafkaOffset,
+              queryKafkaTopic: queryKafkaTopic !== '[object Object]' ? queryKafkaTopic : '',
+              queryIdentifierType
+            },
             queryId
           })
           .then(res => {
@@ -130,23 +135,26 @@ const Home = _ => {
         <ThemeProvider theme={theme}>
           <div style={{ width: '100%' }}>
             <div style={{ display: 'inline-flex', width: '90%', paddingBottom: '12px' }}>
-              <NativeSelect
-                style={{ flex: '1.1', margin: 10 }}
-                margin='dense'
-                variant='standard'
-                defaultValue={30}
-                color='primary'
-                label='Select Kafka Topic'
-                onChange={onChangeKafkaTopic}
-                value={queryKafkaTopic}
-                inputProps={{
-                  name: 'name',
-                  id: 'uncontrolled-native',
-                }}
-                >{topicList.map(topic => <option value={topic}>{topic}</option>)}
-              </NativeSelect>
+              <FormControl
+                  style={{ flex: '1.5', margin: 10, marginRight: 20, textAlign: 'left'}}
+                  margin='dense'
+                  variant='standard'              
+              >
+                <InputLabel id='labeltje'>Kafka Topic</InputLabel>
+                <Select
+                  labelId='labeltje'
+                  value={queryKafkaTopic}
+                  onChange={onChangeKafkaTopic}
+                  label='Search Kafka Topic'
+                  placeholder='Select Kafka Topic'
+                >{topicList.map(topic => {
+                  const t = topic === 'none' ? <em>none</em> : topic
+                  return <MenuItem value={t}>{t}</MenuItem>
+                })}
+                </Select>
+              </FormControl>
               <TextField
-                style={{ flex: '1', margin: 10 }}
+                style={{ flex: '0.7', margin: 10 }}
                 margin='dense'
                 variant='standard'
                 onChange={onChangeKafkaOffset}

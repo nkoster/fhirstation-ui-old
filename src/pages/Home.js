@@ -94,7 +94,7 @@ const Home = _ => {
             cancelToken: cancelTokenSource.token,
             search: {
               queryIdentifierValue, queryKafkaOffset,
-              queryKafkaTopic: queryKafkaTopic !== '[object Object]' ? queryKafkaTopic : '',
+              queryKafkaTopic: queryKafkaTopic !== 'none' ? queryKafkaTopic : '',
               queryIdentifierType
             },
             queryId
@@ -145,11 +145,10 @@ const Home = _ => {
                   labelId='labeltje'
                   value={queryKafkaTopic}
                   onChange={onChangeKafkaTopic}
-                  label={'Search Kafka Topic (' + topicList.length - 1 + ')'}
-                  placeholder='Select Kafka Topic'
+                  label={'Kafka Topic (' + topicList.length - 1 + ')'}
                 >{topicList.map(topic => {
-                  const t = topic === 'none' ? <em>none</em> : topic
-                  return <MenuItem value={t}>{t}</MenuItem>
+                  const t = topic === 'none' ? <em style={{color:'gray'}}>none</em> : topic
+                  return <MenuItem value={topic}>{t}</MenuItem>
                 })}
                 </Select>
               </FormControl>
@@ -161,7 +160,7 @@ const Home = _ => {
                 value={queryKafkaOffset}
                 color='primary'
                 type='search'
-                label='Search Kafka Offset'
+                label='Kafka Offset'
                 placeholder='...'
                 spellCheck={false}
               /> {/* text color in App.css: input */}
@@ -173,7 +172,7 @@ const Home = _ => {
                 value={queryIdentifierType}
                 color='primary'
                 type='search'
-                label='Search Identifier Type'
+                label='Identifier Type'
                 placeholder='...'
                 spellCheck={false}
                 /> {/* text color in App.css: input */}
@@ -185,7 +184,7 @@ const Home = _ => {
                 value={queryIdentifierValue}
                 color='primary'
                 type='search'
-                label='Search Identifier Value'
+                label='Identifier Value'
                 placeholder='...'
                 spellCheck={false}
                 /> {/* text color in App.css: input */}

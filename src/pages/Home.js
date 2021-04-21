@@ -23,22 +23,22 @@ const theme = createMuiTheme({
   }
 })
 
-const topicList = [
-  'none',
-  'fhir3.databus.portavita.pvt_amstelveen.episodeofcare',
-  'fhir3.databus.portavita.pvt_amstelveen.medication',
-  'fhir3.databus.portavita.pvt_amstelveen.basic',
-  'fhir3.databus.portavita.pvt_amstelveen.encounter',
-  'fhir3.databus.portavita.pvt_amstelveen.patient',
-  'fhir3.databus.portavita.pvt_amstelveen.careteam',
-  'fhir3.databus.portavita.pvt_amstelveen.observation',
-  'fhir3.databus.portavita.pvt_amstelveen.organization',
-  'fhir4.capybara.firefly.medicom.observation',
-  'fhir3.databus.portavita.pvt_amstelveen.coverage',
-  'fhir3.databus.portavita.pvt_amstelveen.communication',
-  'fhir3.databus.portavita.pvt_amstelveen.practitioner',
-  'fhir3.databus.portavita.pvt_amstelveen.practitionerrole'
-]
+// const topicList = [
+//   'none',
+//   'fhir3.databus.portavita.pvt_amstelveen.episodeofcare',
+//   'fhir3.databus.portavita.pvt_amstelveen.medication',
+//   'fhir3.databus.portavita.pvt_amstelveen.basic',
+//   'fhir3.databus.portavita.pvt_amstelveen.encounter',
+//   'fhir3.databus.portavita.pvt_amstelveen.patient',
+//   'fhir3.databus.portavita.pvt_amstelveen.careteam',
+//   'fhir3.databus.portavita.pvt_amstelveen.observation',
+//   'fhir3.databus.portavita.pvt_amstelveen.organization',
+//   'fhir4.capybara.firefly.medicom.observation',
+//   'fhir3.databus.portavita.pvt_amstelveen.coverage',
+//   'fhir3.databus.portavita.pvt_amstelveen.communication',
+//   'fhir3.databus.portavita.pvt_amstelveen.practitioner',
+//   'fhir3.databus.portavita.pvt_amstelveen.practitionerrole'
+// ]
 
 const cancelTokenSource = axios.CancelToken.source()
 
@@ -48,12 +48,11 @@ const Home = _ => {
   const [queryKafkaOffset, setQueryKafkaOffset] = useState('')
   const [queryKafkaTopic, setQueryKafkaTopic] = useState('')
   const [queryIdentifierType, setQueryIdentifierType] = useState('')
-
   const [queryId] = useState(Math.random().toString(20).substr(2))
-
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [topicList, setTopicList] = useState([])
 
   const img2 = useRef()
 
@@ -78,6 +77,17 @@ const Home = _ => {
     setQueryIdentifierType(evt.target.value)
     setError('')
   }
+
+  useEffect(async _ => {
+    try {
+      const response = await axios.post('https://api.fhirstation.net/function/topiclister')
+      let list = response.data.map(i => i.kafka_topic)
+      list.unshift('none')
+      setTopicList(list)
+    } catch(err) {
+      console.log(err.message)
+    }
+  }, [])
 
   useEffect(_ => {
     const timeout = setTimeout(async _ => {

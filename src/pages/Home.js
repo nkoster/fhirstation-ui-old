@@ -150,7 +150,7 @@ const Home = _ => {
                   margin='dense'
                   variant='standard'              
               >
-                <InputLabel id='labeltje'>Kafka Topic &nbsp; ({topicList.length - 1})</InputLabel>
+                <InputLabel id='labeltje'>Kafka Topic &nbsp; ({topicList.length === 0 ? 'loading...' : topicList.length - 1})</InputLabel>
                 <Select
                   labelId='labeltje'
                   value={queryKafkaTopic}

@@ -95,7 +95,7 @@ const Home = _ => {
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       localStorage.setItem('queryKafkaTopic', queryKafkaTopic ? queryKafkaTopic : '')
       localStorage.setItem('queryIdentifierType', queryIdentifierType ? queryIdentifierType : '')
-      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) {
+      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== 'none' || queryIdentifierType) {
         cancelTokenSource.cancel()
         try {
             setLoading(true)
@@ -122,7 +122,7 @@ const Home = _ => {
         setData([])
       }
     }, 500)
-    if (!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) {
+    if (!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === 'none' && !queryIdentifierType) {
       setLoading(false)
     }
     return _ => {
@@ -150,7 +150,7 @@ const Home = _ => {
                   margin='dense'
                   variant='standard'              
               >
-                <InputLabel id='labeltje'>Kafka Topic &nbsp; ({topicList.length === 0 ? 'loading...' : topicList.length - 1})</InputLabel>
+                <InputLabel id='labeltje'>Kafka Topic &nbsp;({topicList.length === 0 ? 'loading...' : topicList.length - 1})</InputLabel>
                 <Select
                   labelId='labeltje'
                   value={queryKafkaTopic}
@@ -205,8 +205,8 @@ const Home = _ => {
             <div></div>
             {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, querying database... <Timer /></p></div> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ? <p style={{ fontSize: '18px', color: '#333', marginTop: 50 }}>please adjust your search</p> : null}
-            {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
+            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== 'none' || queryIdentifierType) ? <p style={{ fontSize: '18px', color: '#333', marginTop: 50 }}>please adjust your search</p> : null}
+            {(!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === 'none' && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
           </div>
         </ThemeProvider>
       </header>}

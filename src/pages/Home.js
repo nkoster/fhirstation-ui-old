@@ -158,7 +158,7 @@ const Home = _ => {
                   label={'Kafka Topic (' + topicList.length - 1 + ')'}
                 >{topicList.map(topic => {
                   const t = topic === 'none' ? <em style={{color:'gray'}}>none</em> : topic
-                  return <MenuItem value={topic}>{t}</MenuItem>
+                  return <MenuItem key={t} value={topic}>{t}</MenuItem>
                 })}
                 </Select>
               </FormControl>

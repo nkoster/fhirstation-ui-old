@@ -27,14 +27,13 @@ const Details = props => {
     const cancelTokenSource = axios.CancelToken.source()
     try {
       setLoading(true)
-        await axios.post('https://offset.fhirstation.net/function/offsetter2', {
+        await axios.post('https://offset.fhirstation.net/function/offsetter', {
         topic, offset, partition,
         cancelToken: cancelTokenSource.token
       })
       .then(res => {
-        console.log('DATA', res.data)
         setData(res.data)
-        setMessageObj(JSON.parse(res.data.value))
+        setMessageObj(JSON.parse(res.data.message.value))
         setLoading(false)
       })
     } catch(err) {
@@ -57,15 +56,15 @@ const Details = props => {
                 <th style={{borderBottom: '1px solid #999' }}>key</th>
                 <th style={{borderBottom: '1px solid #999' }}>partition</th>
                 <th style={{borderBottom: '1px solid #999' }}>offset</th>
-                <th style={{borderBottom: '1px solid #999' }}>highWaterOffset</th>
+                <th style={{borderBottom: '1px solid #999' }}>highWatermark</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{data.key}</td>
+                <td>{data?.message?.key}</td>
                 <td>{data.partition}</td>
-                <td>{data.offset}</td>
-                <td>{data.highWaterOffset}</td>
+                <td>{data?.message?.offset}</td>
+                <td>{data.highWatermark}</td>
               </tr>
             </tbody>
           </table>}

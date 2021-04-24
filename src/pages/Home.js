@@ -153,7 +153,7 @@ const Home = _ => {
               </FormControl> */}
               <Autocomplete
                 {...defaultProps}
-                style={{ flex: '1.5', margin: 7, marginRight: 20, textAlign: 'left'}}
+                style={{ flex: '1.5', margin: 7, marginRight: 10, textAlign: 'left'}}
                 margin='dense'
                 variant='standard'
                 onChange={onChangeKafkaTopic}

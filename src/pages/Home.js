@@ -133,24 +133,6 @@ const Home = _ => {
         <ThemeProvider theme={theme}>
           <div style={{ width: '100%' }}>
             <div style={{ display: 'inline-flex', width: '90%', paddingBottom: '12px' }}>
-              {/* <FormControl
-                  style={{ flex: '1.5', margin: 10, marginRight: 20, textAlign: 'left'}}
-                  margin='dense'
-                  variant='standard'              
-              >
-                <InputLabel id='labeltje'>Kafka Topic &nbsp;({topicList.length === 0 ? 'loading...' : topicList.length - 1})</InputLabel>
-                <Select
-                  autoComplete={true}
-                  labelId='labeltje'
-                  value={queryKafkaTopic}
-                  onChange={onChangeKafkaTopic}
-                  label={'Kafka Topic (' + topicList.length - 1 + ')'}
-                >{topicList.map(topic => {
-                  const t = topic === 'none' ? <em style={{color:'gray'}}>none</em> : topic
-                  return <MenuItem key={t} value={topic}>{t}</MenuItem>
-                })}
-                </Select>
-              </FormControl> */}
               <Autocomplete
                 {...defaultProps}
                 style={{ flex: '1.5', margin: 7, marginRight: 10, textAlign: 'left'}}
@@ -159,7 +141,12 @@ const Home = _ => {
                 onChange={onChangeKafkaTopic}
                 value={queryKafkaTopic}
                 debug
-                renderInput={params => <TextField {...params} label={`Kafka Topic (${topicList.length === 0 ? 'loading...' : topicList.length - 1})`} />}
+                renderInput={params => 
+                  <TextField
+                    {...params}
+                    placeholder='none'
+                    label={`Kafka Topic (${topicList.length === 0 ? 'loading...' : topicList.length - 1})`}
+                  />}
               />
               <TextField
                 style={{ flex: '0.7', margin: 10 }}

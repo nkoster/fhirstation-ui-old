@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import '../App.css'
 import { TextField, ThemeProvider, createMuiTheme, FormControl, Select, InputLabel, MenuItem } from '@material-ui/core'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'
 import Lister from '../components/Lister'
@@ -23,23 +24,6 @@ const theme = createMuiTheme({
   }
 })
 
-// const topicList = [
-//   'none',
-//   'fhir3.databus.portavita.pvt_amstelveen.episodeofcare',
-//   'fhir3.databus.portavita.pvt_amstelveen.medication',
-//   'fhir3.databus.portavita.pvt_amstelveen.basic',
-//   'fhir3.databus.portavita.pvt_amstelveen.encounter',
-//   'fhir3.databus.portavita.pvt_amstelveen.patient',
-//   'fhir3.databus.portavita.pvt_amstelveen.careteam',
-//   'fhir3.databus.portavita.pvt_amstelveen.observation',
-//   'fhir3.databus.portavita.pvt_amstelveen.organization',
-//   'fhir4.capybara.firefly.medicom.observation',
-//   'fhir3.databus.portavita.pvt_amstelveen.coverage',
-//   'fhir3.databus.portavita.pvt_amstelveen.communication',
-//   'fhir3.databus.portavita.pvt_amstelveen.practitioner',
-//   'fhir3.databus.portavita.pvt_amstelveen.practitionerrole'
-// ]
-
 const cancelTokenSource = axios.CancelToken.source()
 
 const Home = _ => {
@@ -54,6 +38,10 @@ const Home = _ => {
   const [error, setError] = useState('')
   const [topicList, setTopicList] = useState([])
 
+  const defaultProps = {
+    options: topicList
+  }
+  
   const img2 = useRef()
 
   const location = useLocation()
@@ -69,7 +57,7 @@ const Home = _ => {
   }
 
   const onChangeKafkaTopic = evt => {
-    setQueryKafkaTopic(evt.target.value)
+    setQueryKafkaTopic(evt.target.innerText)
     setError('')
   }
 
@@ -82,7 +70,7 @@ const Home = _ => {
     try {
       const response = await axios.post('https://api.fhirstation.net/function/topiclister')
       let list = response.data.map(i => i.kafka_topic)
-      list.unshift('none')
+      list.unshift('')
       setTopicList(list)
     } catch(err) {
       console.log(err.message)
@@ -95,7 +83,7 @@ const Home = _ => {
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       localStorage.setItem('queryKafkaTopic', queryKafkaTopic ? queryKafkaTopic : '')
       localStorage.setItem('queryIdentifierType', queryIdentifierType ? queryIdentifierType : '')
-      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== 'none' || queryIdentifierType) {
+      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== '' || queryIdentifierType) {
         cancelTokenSource.cancel()
         try {
             setLoading(true)
@@ -104,7 +92,7 @@ const Home = _ => {
             cancelToken: cancelTokenSource.token,
             search: {
               queryIdentifierValue, queryKafkaOffset,
-              queryKafkaTopic: queryKafkaTopic !== 'none' ? queryKafkaTopic : '',
+              queryKafkaTopic: queryKafkaTopic !== '' ? queryKafkaTopic : '',
               queryIdentifierType
             },
             queryId
@@ -122,7 +110,7 @@ const Home = _ => {
         setData([])
       }
     }, 500)
-    if (!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === 'none' && !queryIdentifierType) {
+    if (!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === '' && !queryIdentifierType) {
       setLoading(false)
     }
     return _ => {
@@ -133,7 +121,7 @@ const Home = _ => {
   useEffect(_ => {
     setQueryIdentifierValue(localStorage.getItem('queryIdentifierValue'))
     setQueryKafkaOffset(localStorage.getItem('queryKafkaOffset'))
-    setQueryKafkaTopic(localStorage.getItem('queryKafkaTopic'))
+    setQueryKafkaTopic(localStorage.getItem('queryKafkaTopic') || '')
     setQueryIdentifierType(localStorage.getItem('queryIdentifierType'))
   }, [])
 
@@ -145,13 +133,14 @@ const Home = _ => {
         <ThemeProvider theme={theme}>
           <div style={{ width: '100%' }}>
             <div style={{ display: 'inline-flex', width: '90%', paddingBottom: '12px' }}>
-              <FormControl
+              {/* <FormControl
                   style={{ flex: '1.5', margin: 10, marginRight: 20, textAlign: 'left'}}
                   margin='dense'
                   variant='standard'              
               >
                 <InputLabel id='labeltje'>Kafka Topic &nbsp;({topicList.length === 0 ? 'loading...' : topicList.length - 1})</InputLabel>
                 <Select
+                  autoComplete={true}
                   labelId='labeltje'
                   value={queryKafkaTopic}
                   onChange={onChangeKafkaTopic}
@@ -161,7 +150,17 @@ const Home = _ => {
                   return <MenuItem key={t} value={topic}>{t}</MenuItem>
                 })}
                 </Select>
-              </FormControl>
+              </FormControl> */}
+              <Autocomplete
+                {...defaultProps}
+                style={{ flex: '1.5', margin: 7, marginRight: 20, textAlign: 'left'}}
+                margin='dense'
+                variant='standard'
+                onChange={onChangeKafkaTopic}
+                value={queryKafkaTopic}
+                debug
+                renderInput={params => <TextField {...params} label={`Kafka Topic (${topicList.length === 0 ? 'loading...' : topicList.length - 1})`} />}
+              />
               <TextField
                 style={{ flex: '0.7', margin: 10 }}
                 margin='dense'
@@ -205,8 +204,8 @@ const Home = _ => {
             <div></div>
             {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, querying database... <Timer /></p></div> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== 'none' || queryIdentifierType) ? <p style={{ fontSize: '16px', color: '#333', marginTop: 50 }}>please adjust your search...</p> : null}
-            {(!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === 'none' && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
+            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== '' || queryIdentifierType) ? <p style={{ fontSize: '16px', color: '#333', marginTop: 50 }}>please adjust your search...</p> : null}
+            {(!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === '' && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
           </div>
         </ThemeProvider>
       </header>}

@@ -71,7 +71,7 @@ const Home = _ => {
       const response = await axios.post('https://api.fhirstation.net/function/topiclister')
       let list = response.data.map(i => i.kafka_topic)
       list.unshift('')
-      setTopicList(list)
+      setTopicList(list.sort())
     } catch(err) {
       console.log(err.message)
     }

@@ -56,8 +56,8 @@ const Home = _ => {
     setError('')
   }
 
-  const onChangeKafkaTopic = evt => {
-    setQueryKafkaTopic(evt.target.innerText)
+  const onChangeKafkaTopic = (_, v) => {
+    setQueryKafkaTopic(v)
     setError('')
   }
 

@@ -37,7 +37,7 @@ const Lister = ({data, limit}) => {
   return (
     <div style={{ height: '82vh', width: '100%' }}>
       {(data.length > 0 && data.length < limit) && <DataGrid hideFooter rows={data.map(d => {
-        return { ...d, id: Math.random().toString(20)}
+        return { ...d, id: Math.random().toString(20), kafka_offset: parseInt(d.kafka_offset)}
       })} columns={columns} />}
       {data.length >= limit && <p style={{fontSize: 14}}>Too many rows</p>}
     </div>

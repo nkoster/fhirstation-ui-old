@@ -83,7 +83,7 @@ const Home = _ => {
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       localStorage.setItem('queryKafkaTopic', queryKafkaTopic ? queryKafkaTopic : '')
       localStorage.setItem('queryIdentifierType', queryIdentifierType ? queryIdentifierType : '')
-      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== '' || queryIdentifierType) {
+      if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) {
         cancelTokenSource.cancel()
         try {
             setLoading(true)
@@ -91,8 +91,7 @@ const Home = _ => {
             await axios.post('https://api.fhirstation.net/function/seeker', {
             cancelToken: cancelTokenSource.token,
             search: {
-              queryIdentifierValue, queryKafkaOffset,
-              queryKafkaTopic: queryKafkaTopic !== '' ? queryKafkaTopic : '',
+              queryIdentifierValue, queryKafkaOffset, queryKafkaTopic,
               queryIdentifierType
             },
             queryId
@@ -110,7 +109,7 @@ const Home = _ => {
         setData([])
       }
     }, 500)
-    if (!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === '' && !queryIdentifierType) {
+    if (!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) {
       setLoading(false)
     }
     return _ => {
@@ -121,7 +120,7 @@ const Home = _ => {
   useEffect(_ => {
     setQueryIdentifierValue(localStorage.getItem('queryIdentifierValue'))
     setQueryKafkaOffset(localStorage.getItem('queryKafkaOffset'))
-    setQueryKafkaTopic(localStorage.getItem('queryKafkaTopic') || '')
+    setQueryKafkaTopic(localStorage.getItem('queryKafkaTopic'))
     setQueryIdentifierType(localStorage.getItem('queryIdentifierType'))
   }, [])
 
@@ -191,8 +190,8 @@ const Home = _ => {
             <div></div>
             {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, querying database... <Timer /></p></div> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic !== '' || queryIdentifierType) ? <p style={{ fontSize: '16px', color: '#333', marginTop: 50 }}>please adjust your search...</p> : null}
-            {(!queryIdentifierValue && !queryKafkaOffset && queryKafkaTopic === '' && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
+            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ? <p style={{ fontSize: '16px', color: '#333', marginTop: 50 }}>please adjust your search...</p> : null}
+            {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
           </div>
         </ThemeProvider>
       </header>}

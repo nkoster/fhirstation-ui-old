@@ -187,11 +187,20 @@ const Home = _ => {
             {data.length > 0 && <div style={{ display: 'inline-block', paddingTop: '20px', fontSize: '14px' }}>
               <br />{data.length > 50 ? '50+' : data.length}<br />row{data.length === 1 ? '' : 's'}
             </div>}
-            <div></div>
-            {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, querying database... <Timer /></p></div> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
+            {loading ?
+              <div>
+                <ScaleLoader color='orange'/>
+                <p style={{ fontSize: '16px'}}>please wait, querying database... <Timer /></p>
+              </div> : (data.length > 0 && <Lister data={data} limit={LIMIT} />)}
             {error && <p style={{ fontSize: '18px', color: 'black' }}>{error}</p>}
-            {data.length === 0 && !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ? <p style={{ fontSize: '16px', color: '#333', marginTop: 50 }}>please adjust your search...</p> : null}
-            {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) && <div><img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' /></div>}
+            {data.length === 0 &&
+              !loading && !error && (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) ?
+              <p style={{ fontSize: '16px', color: '#333', marginTop: 50 }}>please adjust your search...</p> :
+              null}
+            {(!queryIdentifierValue && !queryKafkaOffset && !queryKafkaTopic && !queryIdentifierType) &&
+              <div>
+                <img ref={img2} style={fire2Style} src={fhirDepartment2} alt='FHIR Station' />
+              </div>}
           </div>
         </ThemeProvider>
       </header>}

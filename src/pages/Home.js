@@ -10,6 +10,7 @@ import { ScaleLoader } from 'react-spinners'
 import { Route, useLocation } from 'react-router-dom'
 import Details from '../pages/Details'
 import Timer from '../components/Timer'
+import { makeStyles } from '@material-ui/core/styles'
 
 const LIMIT = 52
 
@@ -27,6 +28,16 @@ const theme = createMuiTheme({
 const cancelTokenSource = axios.CancelToken.source()
 
 const Home = _ => {
+
+  const useStyles = makeStyles({
+    '@global': {
+        '.MuiAutocomplete-option[data-focus="true"]': {
+            background: '#dfdfdf'
+        }
+    }
+  })
+
+  const styles = useStyles()
 
   const [queryIdentifierValue, setQueryIdentifierValue] = useState('')
   const [queryKafkaOffset, setQueryKafkaOffset] = useState('')
@@ -139,6 +150,7 @@ const Home = _ => {
                 variant='standard'
                 onChange={onChangeKafkaTopic}
                 value={queryKafkaTopic}
+                classes={styles}
                 debug
                 renderInput={params => 
                   <TextField

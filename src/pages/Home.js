@@ -144,6 +144,7 @@ const Home = _ => {
           <div style={{ width: '100%' }}>
             <div style={{ display: 'inline-flex', width: '90%', paddingBottom: '12px' }}>
               <Autocomplete
+                ListboxProps={{ style: { maxHeight: '600px' } }}
                 {...defaultProps}
                 style={{ flex: '1.5', margin: 7, marginRight: 10, textAlign: 'left'}}
                 margin='dense'

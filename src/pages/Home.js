@@ -32,7 +32,7 @@ const Home = _ => {
   const useStyles = makeStyles({
     '@global': {
         '.MuiAutocomplete-option[data-focus="true"]': {
-            background: '#dfdfdf'
+          background: '#e9e8e7'
         }
     }
   })

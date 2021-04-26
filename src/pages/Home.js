@@ -151,7 +151,6 @@ const Home = _ => {
                 onChange={onChangeKafkaTopic}
                 value={queryKafkaTopic}
                 classes={styles}
-                debug
                 renderInput={params => 
                   <TextField
                     {...params}

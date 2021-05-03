@@ -10,12 +10,6 @@ import Timer from '../components/Timer'
 
 const Details = props => {
 
-  if (!props.location.state) {
-    return (
-      <Redirect to='/' />
-      )
-  }
-
   const [ data, setData ] = useState({})
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
@@ -27,7 +21,7 @@ const Details = props => {
     const cancelTokenSource = axios.CancelToken.source()
     try {
       setLoading(true)
-        await axios.post('https://offset.fhirstation.net/function/offsetter2', {
+        await axios.post('https://offset.fhirstation.net/function/offsetter', {
         topic, offset, partition,
         cancelToken: cancelTokenSource.token
       })
@@ -43,6 +37,12 @@ const Details = props => {
     }
   }, [])
 
+  if (!props.location.state) {
+    return (
+      <Redirect to='/' />
+      )
+  }
+  
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'flex', alignItems: 'center'}}>
@@ -50,25 +50,21 @@ const Details = props => {
           <Tooltip title='go back' arrow>
             <h3 style={{ flex: 1, justifyContent: 'center', cursor: 'pointer' }} onClick={_ => history.goBack()}><span>↤</span> &nbsp; {topic} / {offset}</h3>
           </Tooltip>
-          {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka... <Timer /></p></div> : null
-          // <table style={{ flex: 1 }}>
-          //   <thead>
-          //     <tr>
-          //       <th style={{borderBottom: '1px solid #999' }}>key</th>
-          //       <th style={{borderBottom: '1px solid #999' }}>partition</th>
-          //       <th style={{borderBottom: '1px solid #999' }}>offset</th>
-          //       <th style={{borderBottom: '1px solid #999' }}>highWatermark</th>
-          //     </tr>
-          //   </thead>
-          //   <tbody>
-          //     <tr>
-          //       <td>{data?.message?.key}</td>
-          //       <td>{data.partition}</td>
-          //       <td>{data?.message?.offset}</td>
-          //       <td>{data.highWatermark}</td>
-          //     </tr>
-          //   </tbody>
-          // </table>
+          {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka... <Timer /></p></div> :
+          <table style={{ flex: 1 }}>
+            <thead>
+              <tr>
+                <th style={{borderBottom: '1px solid #999' }}>partition</th>
+                <th style={{borderBottom: '1px solid #999' }}>offset</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{partition}</td>
+                <td>{offset}</td>
+              </tr>
+            </tbody>
+          </table>
           }
           <div style={{ flex: 1 }}>
             {loading || 

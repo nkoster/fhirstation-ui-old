@@ -1,7 +1,7 @@
 import './App.css'
 import Home from './pages/Home'
 import { useRef, useEffect, useState } from 'react'
-import fhirDepartment1 from '/home/niels/src/js/react/inputter/src/pix/fire1.png'
+import fhirDepartment1 from './pix/fire1.png'
 
 const App = _ => {
   const [loading, setLoading] = useState(true)

@@ -5,6 +5,7 @@ import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 import BackspaceIcon from '@material-ui/icons/Backspace';
+import SearchIcon from '@material-ui/icons/Search';
 import Timer from '../components/Timer'
 
 const Details = props => {
@@ -34,7 +35,7 @@ const Details = props => {
 
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
-      <div style={{position: 'absolute', left: 20, top: 20}}>
+      <div style={{position: 'fixed', left: 20, top: 20, zIndex: 100}}>
       {
         history.location.state ?
         <Button
@@ -50,7 +51,8 @@ const Details = props => {
           onClick={_ => window.open('/', '_self')}
           color='default'
           size='small'
-        >home
+          startIcon={<SearchIcon />}
+          >search
         </Button>
       }
       </div>

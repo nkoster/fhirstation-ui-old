@@ -42,7 +42,7 @@ const Details = props => {
           size='small'
           style={{position: 'absolute', left: 20, top: 20}}
           startIcon={<BackspaceIcon />}
-        >⤺ back
+        >back
         </Button> :
         <Button
           variant='outlined'
@@ -50,7 +50,7 @@ const Details = props => {
           color='default'
           size='small'
           style={{position: 'absolute', left: 20, top: 20}}
-        >⤺ home
+        >home
       </Button>
       }
       <div style={{display: 'flex', alignItems: 'center'}}>

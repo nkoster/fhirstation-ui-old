@@ -136,9 +136,11 @@ const Home = _ => {
     setQueryIdentifierType(localStorage.getItem('queryIdentifierType'))
   }, [])
 
+  console.log(location.pathname)
+
   return (
     <div className="App">
-      <Route path="/details/:topic/:offset" component={Details} />
+      <Route path="/details/:topic/:partition/:offset" component={Details} />
       {location.pathname === '/' &&
       <header className="App-header">
         <ThemeProvider theme={theme}>

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
 import { Tooltip, Button } from '@material-ui/core'
-
+import BackspaceIcon from '@material-ui/icons/Backspace';
 import Timer from '../components/Timer'
 
 const Details = props => {
@@ -32,15 +32,29 @@ const Details = props => {
     }
   }, [])
 
+  console.log(history)
+
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
-      <Button
-        variant='outlined'
-        onClick={_ => history.goBack()}
-        color='default'
-        size='small'
-        style={{position: 'absolute', left: 20, top: 20}}
-      >⤺ back</Button>
+      {history.location.state ?
+        <Button
+          variant='outlined'
+          onClick={_ => history.goBack()}
+          color='default'
+          size='small'
+          style={{position: 'absolute', left: 20, top: 20}}
+          startIcon={<BackspaceIcon />}
+        >⤺ back
+        </Button> :
+        <Button
+          variant='outlined'
+          onClick={_ => window.open('/', '_self')}
+          color='default'
+          size='small'
+          style={{position: 'absolute', left: 20, top: 20}}
+        >⤺ home
+      </Button>
+      }
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka... <Timer /></p></div> :

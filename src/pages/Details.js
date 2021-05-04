@@ -10,11 +10,12 @@ import Timer from '../components/Timer'
 
 const Details = props => {
 
+  console.log(props)
+
   const [ data, setData ] = useState({})
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
-  const { topic, offset } = props.match.params
-  const { partition } = props.location.state
+  const { topic, partition, offset } = props.match.params
   const history = useHistory()
 
   useEffect(async _ => {
@@ -37,11 +38,11 @@ const Details = props => {
     }
   }, [])
 
-  if (!props.location.state) {
-    return (
-      <Redirect to='/' />
-      )
-  }
+  // if (!props.location.state) {
+  //   return (
+  //     <Redirect to='/' />
+  //     )
+  // }
   
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>

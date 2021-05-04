@@ -4,15 +4,11 @@ import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
 import { Tooltip } from '@material-ui/core'
-import { Redirect } from 'react-router-dom'
 
 import Timer from '../components/Timer'
 
 const Details = props => {
 
-  console.log(props)
-
-  const [ data, setData ] = useState({})
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
   const { topic, partition, offset } = props.match.params
@@ -27,8 +23,6 @@ const Details = props => {
         cancelToken: cancelTokenSource.token
       })
       .then(res => {
-        setData(res.data)
-        console.log('DATA', res.data)
         setMessageObj(res.data)
         setLoading(false)
       })
@@ -38,12 +32,6 @@ const Details = props => {
     }
   }, [])
 
-  // if (!props.location.state) {
-  //   return (
-  //     <Redirect to='/' />
-  //     )
-  // }
-  
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'flex', alignItems: 'center'}}>

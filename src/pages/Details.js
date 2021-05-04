@@ -4,16 +4,23 @@ import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
 import { Button } from '@material-ui/core'
-import BackspaceIcon from '@material-ui/icons/Backspace';
-import SearchIcon from '@material-ui/icons/Search';
+import BackspaceIcon from '@material-ui/icons/Backspace'
+import SearchIcon from '@material-ui/icons/Search'
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
+import ArrowRightIcon from '@material-ui/icons/ArrowRight'
+
 import Timer from '../components/Timer'
 
 const Details = props => {
 
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
-  const { topic, partition, offset } = props.match.params
+  const { topic } = props.match.params
+  let { partition, offset } = props.match.params
   const history = useHistory()
+
+  if (Number(partition) < 0) partition = '0'
+  if (Number(offset) < 0) offset = '0'
 
   useEffect(async _ => {
     const cancelTokenSource = axios.CancelToken.source()
@@ -64,7 +71,17 @@ const Details = props => {
               <tr>
                 <th style={{borderBottom: '1px solid #999' }}>topic</th>
                 <th style={{borderBottom: '1px solid #999' }}>partition</th>
-                <th style={{borderBottom: '1px solid #999' }}>offset</th>
+                <th style={{borderBottom: '1px solid #999', display: 'flex' }}>
+                  <ArrowLeftIcon
+                    onClick={_ => window.open(`/details/${topic}/${partition}/${offset - 1 >= 0 ? offset - 1 : 0}`, '_self')}
+                    style={{cursor: 'pointer'}}
+                  />
+                  offset
+                  <ArrowRightIcon
+                    onClick={_ => window.open(`/details/${topic}/${partition}/${Number(offset) + 1}`, '_self')}
+                    style={{cursor: 'pointer'}}
+                  />
+                </th>
               </tr>
             </thead>
             <tbody>

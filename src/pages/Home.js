@@ -136,8 +136,6 @@ const Home = _ => {
     setQueryIdentifierType(localStorage.getItem('queryIdentifierType'))
   }, [])
 
-  console.log(location.pathname)
-
   return (
     <div className="App">
       <Route path="/details/:topic/:partition/:offset" component={Details} />

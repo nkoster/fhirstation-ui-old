@@ -43,12 +43,14 @@ const Details = props => {
           <table style={{ flex: 1 }}>
             <thead>
               <tr>
+                <th style={{borderBottom: '1px solid #999' }}>topic</th>
                 <th style={{borderBottom: '1px solid #999' }}>partition</th>
                 <th style={{borderBottom: '1px solid #999' }}>offset</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>{topic}</td>
                 <td>{partition}</td>
                 <td>{offset}</td>
               </tr>

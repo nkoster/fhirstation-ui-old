@@ -9,7 +9,7 @@ const Lister = ({data, limit}) => {
   const renderCell = data => {
       const onClick = _ => {
       history.push({
-        pathname: `/details/${data.row.kafka_topic}/${data.row.kafka_offset}`,
+        pathname: `/details/${data.row.kafka_topic}/${data.row.kafka_partition}/${data.row.kafka_offset}`,
         state: {
           identifierType: data.row.identifier_type,
           identifierValue: data.row.identifier_value,

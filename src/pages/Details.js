@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
-import { Tooltip, Button } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import BackspaceIcon from '@material-ui/icons/Backspace';
 import Timer from '../components/Timer'
 

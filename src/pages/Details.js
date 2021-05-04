@@ -34,13 +34,14 @@ const Details = props => {
 
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
-      {history.location.state ?
+      <div style={{position: 'absolute', left: 20, top: 20}}>
+      {
+        history.location.state ?
         <Button
           variant='outlined'
           onClick={_ => history.goBack()}
           color='default'
           size='small'
-          style={{position: 'absolute', left: 20, top: 20}}
           startIcon={<BackspaceIcon />}
         >back
         </Button> :
@@ -49,10 +50,10 @@ const Details = props => {
           onClick={_ => window.open('/', '_self')}
           color='default'
           size='small'
-          style={{position: 'absolute', left: 20, top: 20}}
         >home
-      </Button>
+        </Button>
       }
+      </div>
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka... <Timer /></p></div> :

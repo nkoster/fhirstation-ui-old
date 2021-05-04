@@ -32,8 +32,6 @@ const Details = props => {
     }
   }, [])
 
-  console.log(history)
-
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       {history.location.state ?

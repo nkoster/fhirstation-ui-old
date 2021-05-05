@@ -8,6 +8,7 @@ import BackspaceIcon from '@material-ui/icons/Backspace'
 import SearchIcon from '@material-ui/icons/Search'
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
+import Tooltip from '@material-ui/core/Tooltip'
 import Timer from '../components/Timer'
 
 const Details = props => {
@@ -73,15 +74,19 @@ const Details = props => {
                 <th style={{borderBottom: '1px solid #999' }}>topic</th>
                 <th style={{borderBottom: '1px solid #999' }}>partition</th>
                 <th style={{borderBottom: '1px solid #999', display: 'flex' }}>
-                  <ArrowLeftIcon
-                    onClick={_ => setOffset(offset - 1 >= 0 ? offset - 1 : 0)}
-                    style={{cursor: 'pointer'}}
-                  />
+                  <Tooltip title={offset - 1 > 0 ? offset - 1 : 0}>
+                    <ArrowLeftIcon
+                      onClick={_ => setOffset(offset - 1 > 0 ? offset - 1 : 0)}
+                      style={{cursor: 'pointer'}}
+                    />
+                  </Tooltip>
                   offset
-                  <ArrowRightIcon
-                    onClick={_ => setOffset(Number(offset) + 1)}
-                    style={{cursor: 'pointer'}}
-                  />
+                  <Tooltip title={Number(offset) + 1}>
+                    <ArrowRightIcon
+                      onClick={_ => setOffset(Number(offset) + 1)}
+                      style={{cursor: 'pointer'}}
+                    />
+                  </Tooltip>
                 </th>
               </tr>
             </thead>

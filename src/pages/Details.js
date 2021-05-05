@@ -8,7 +8,6 @@ import BackspaceIcon from '@material-ui/icons/Backspace'
 import SearchIcon from '@material-ui/icons/Search'
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
-
 import Timer from '../components/Timer'
 
 const Details = props => {

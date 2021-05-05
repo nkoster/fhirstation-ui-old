@@ -74,14 +74,14 @@ const Details = props => {
                 <th style={{borderBottom: '1px solid #999' }}>topic</th>
                 <th style={{borderBottom: '1px solid #999' }}>partition</th>
                 <th style={{borderBottom: '1px solid #999', display: 'flex' }}>
-                  <Tooltip title={offset - 1 > 0 ? offset - 1 : 0}>
+                  <Tooltip title={offset - 1 > 0 ? offset - 1 : 0} placement='left-start'>
                     <ArrowLeftIcon
                       onClick={_ => setOffset(offset - 1 > 0 ? offset - 1 : 0)}
                       style={{cursor: 'pointer'}}
                     />
                   </Tooltip>
                   offset
-                  <Tooltip title={Number(offset) + 1}>
+                  <Tooltip title={Number(offset) + 1} placement='right-start'>
                     <ArrowRightIcon
                       onClick={_ => setOffset(Number(offset) + 1)}
                       style={{cursor: 'pointer'}}

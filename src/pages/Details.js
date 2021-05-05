@@ -3,9 +3,8 @@ import { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
-import { Button } from '@material-ui/core'
-import BackspaceIcon from '@material-ui/icons/Backspace'
-import SearchIcon from '@material-ui/icons/Search'
+import IconButton from '@material-ui/core/IconButton'
+import HomeIcon from '@material-ui/icons/Home'
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -51,29 +50,16 @@ const Details = props => {
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{position: 'fixed', left: 20, top: 20, zIndex: 100}}>
-      {
-        history.location.state ?
-        <Button
-          variant='outlined'
-          onClick={_ => history.goBack()}
-          color='default'
-          size='small'
-          startIcon={<BackspaceIcon />}
-        >back
-        </Button> :
-        <Button
-          variant='outlined'
+        <IconButton
+          aria-label='home'
           onClick={_ => history.push({ pathname: '/' })}
-          color='default'
-          size='small'
-          startIcon={<SearchIcon />}
-          >search
-        </Button>
-      }
+        >
+          <HomeIcon />
+        </IconButton>
       </div>
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {loading ? <div><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka... <Timer /></p></div> :
+          {loading ? <div style={{marginTop: 20}}><ScaleLoader color='orange'/><p style={{ fontSize: '16px'}}>please wait, loading from kafka... <Timer /></p></div> :
           <table style={{ flex: 1 }}>
             <thead>
               <tr>

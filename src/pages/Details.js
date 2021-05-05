@@ -21,7 +21,7 @@ const Details = props => {
   const history = useHistory()
 
   if (Number(partition) < 0) partition = '0'
-  if (Number(offset) < 0) offset = '0'
+  if (Number(offset) < 0) setOffset('0')
 
   useEffect(async _ => {
     const cancelTokenSource = axios.CancelToken.source()
@@ -34,6 +34,7 @@ const Details = props => {
       .then(res => {
         setMessageObj(res.data)
         setLoading(false)
+        history.push(`/details/${topic}/${partition}/${offset}`)
       })
     } catch(err) {
       console.warn(err.message)

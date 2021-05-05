@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
@@ -20,6 +20,8 @@ const Details = props => {
   
   const history = useHistory()
 
+  const isFirstRun = useRef(true)
+
   if (Number(partition) < 0) partition = '0'
   if (Number(offset) < 0) setOffset('0')
 
@@ -34,7 +36,11 @@ const Details = props => {
       .then(res => {
         setMessageObj(res.data)
         setLoading(false)
-        history.push(`/details/${topic}/${partition}/${offset}`)
+        if (isFirstRun.current) {
+          isFirstRun.current = false
+        } else {
+          history.push(`/details/${topic}/${partition}/${offset}`)
+        }
       })
     } catch(err) {
       console.warn(err.message)

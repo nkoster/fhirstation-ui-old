@@ -15,8 +15,9 @@ const Details = props => {
 
   const [ messageObj, setMessageObj ] = useState({})
   const [ loading, setLoading ] = useState(false)
-  const { topic } = props.match.params
-  let { partition, offset } = props.match.params
+  const { topic, partition } = props.match.params
+  const [ offset, setOffset ] = useState(props.match.params.offset)
+  
   const history = useHistory()
 
   if (Number(partition) < 0) partition = '0'
@@ -38,7 +39,7 @@ const Details = props => {
       console.warn(err.message)
       setLoading(false)
     }
-  }, [])
+  }, [offset])
 
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -73,12 +74,12 @@ const Details = props => {
                 <th style={{borderBottom: '1px solid #999' }}>partition</th>
                 <th style={{borderBottom: '1px solid #999', display: 'flex' }}>
                   <ArrowLeftIcon
-                    onClick={_ => window.open(`/details/${topic}/${partition}/${offset - 1 >= 0 ? offset - 1 : 0}`, '_self')}
+                    onClick={_ => setOffset(offset - 1 >= 0 ? offset - 1 : 0)}
                     style={{cursor: 'pointer'}}
                   />
                   offset
                   <ArrowRightIcon
-                    onClick={_ => window.open(`/details/${topic}/${partition}/${Number(offset) + 1}`, '_self')}
+                    onClick={_ => setOffset(Number(offset) + 1)}
                     style={{cursor: 'pointer'}}
                   />
                 </th>

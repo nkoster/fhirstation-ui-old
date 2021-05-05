@@ -63,7 +63,7 @@ const Details = props => {
         </Button> :
         <Button
           variant='outlined'
-          onClick={_ => window.open('/', '_self')}
+          onClick={_ => history.push({ pathname: '/' })}
           color='default'
           size='small'
           startIcon={<SearchIcon />}

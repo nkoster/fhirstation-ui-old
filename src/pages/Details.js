@@ -5,10 +5,22 @@ import { ScaleLoader } from 'react-spinners'
 import { useHistory } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 import HomeIcon from '@material-ui/icons/Home'
+import { ThemeProvider, createMuiTheme } from '@material-ui/core'
+import { green, orange } from '@material-ui/core/colors'
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import Timer from '../components/Timer'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: green[700]
+    },
+    secondary: {
+      main: orange[700]
+    }  }
+})
 
 const Details = props => {
 
@@ -50,12 +62,15 @@ const Details = props => {
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{position: 'fixed', left: 20, top: 20, zIndex: 100}}>
+        <ThemeProvider theme={theme}>
         <IconButton
+          color='default' 
           aria-label='home'
           onClick={_ => history.push({ pathname: '/' })}
         >
           <HomeIcon />
         </IconButton>
+        </ThemeProvider>
       </div>
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

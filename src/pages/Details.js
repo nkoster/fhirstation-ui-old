@@ -13,6 +13,7 @@ import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import Timer from '../components/Timer'
+import Boop from '../components/Boop'
 
 const theme = createMuiTheme({
   palette: {
@@ -64,15 +65,17 @@ const Details = props => {
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
       <div style={{position: 'fixed', left: 20, top: 20, zIndex: 100}}>
-        <ThemeProvider theme={theme}>
-        <IconButton
-          color='default' 
-          aria-label='home'
-          onClick={_ => history.push({ pathname: '/' })}
-        >
-          <HomeIcon />
-        </IconButton>
-        </ThemeProvider>
+        <Boop>
+          <ThemeProvider theme={theme}>
+            <IconButton
+              color='default' 
+              aria-label='home'
+              onClick={_ => history.push({ pathname: '/' })}
+            >
+              <HomeIcon />
+            </IconButton>
+          </ThemeProvider>
+        </Boop>
       </div>
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

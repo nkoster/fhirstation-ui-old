@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 import HomeIcon from '@material-ui/icons/Home'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core'
+import Paper from '@material-ui/core/Paper'
+import Grow from '@material-ui/core/Grow'
 import { green, orange } from '@material-ui/core/colors'
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
@@ -118,9 +120,13 @@ const Details = props => {
                   <tbody>
                     <tr>
                       <td>
-                      <pre style={pre}>
-                        {JSON.stringify(messageObj, null, 2)}
-                      </pre>
+                        <Grow in={true}>
+                          <Paper elevation={3}>
+                            <pre style={pre}>
+                              {JSON.stringify(messageObj, null, 2)}
+                            </pre>
+                          </Paper>
+                        </Grow>
                       </td>
                     </tr>
                   </tbody>

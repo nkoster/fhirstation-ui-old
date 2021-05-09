@@ -13,6 +13,7 @@ import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 import Tooltip from '@material-ui/core/Tooltip'
 import Timer from '../components/Timer'
+import Rotate from '../components/Rotate'
 
 const theme = createMuiTheme({
   palette: {
@@ -70,7 +71,9 @@ const Details = props => {
           aria-label='home'
           onClick={_ => history.push({ pathname: '/' })}
         >
-          <HomeIcon />
+          <Rotate>
+            <HomeIcon />
+          </Rotate>
         </IconButton>
         </ThemeProvider>
       </div>

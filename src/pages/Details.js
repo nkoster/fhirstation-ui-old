@@ -70,6 +70,7 @@ const Details = props => {
           color='default' 
           aria-label='home'
           onClick={_ => history.push({ pathname: '/' })}
+          style={{width: 48, height: 48}}
         >
           <Rotate>
             <HomeIcon />

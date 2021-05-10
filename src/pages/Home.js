@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import '../App.css'
-import { TextField, ThemeProvider, createMuiTheme, FormControl, Select, InputLabel, MenuItem } from '@material-ui/core'
+import { TextField, ThemeProvider, createMuiTheme } from '@material-ui/core'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { green, orange } from '@material-ui/core/colors'
 import axios from 'axios'

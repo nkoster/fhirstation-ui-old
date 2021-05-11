@@ -222,12 +222,6 @@ const Home = _ => {
 
 }
 
-const fire1Style = {
-  padding: 0, margin: 0,
-  height: 300,
-  transition: 'height 1s'
-}
-
 const fire2Style = {
   padding: 0, margin: 0,
   height: 250,

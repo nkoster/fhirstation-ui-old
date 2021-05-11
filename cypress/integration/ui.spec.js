@@ -8,10 +8,7 @@ describe('FHIR Station', () => {
 
     beforeEach(() => {
       cy.visit('https://ui.fhirstation.net', {
-        auth: {
-          username: 'niels',
-          password: 'apekop',
-        }
+        auth: require('../../.pw')
       })
       DEMO && cy.wait(1000)
     })

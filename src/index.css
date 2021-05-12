@@ -15,3 +15,8 @@ code {
 table, th, td {
   border: 12px solid transparent;
 }
+
+hr {
+  right: 0;
+  transform-origin: right center;
+}

@@ -89,33 +89,36 @@ const Home = _ => {
     }
   }, [])
 
+  const seeker = async url => {
+    cancelTokenSource.cancel()
+    try {
+        setLoading(true)
+        await axios.post(url, {
+        cancelToken: cancelTokenSource.token,
+        search: {
+          queryIdentifierValue, queryKafkaOffset, queryKafkaTopic,
+          queryIdentifierType
+        },
+        queryId
+      })
+      .then(res => {
+        setData(res.data)
+        setLoading(false)
+      })
+    } catch(err) {
+      console.warn(err.message)
+      setLoading(false)
+    }
+  }
+
   useEffect(_ => {
-    const timeout = setTimeout(async _ => {
+    const timeout = setTimeout(_ => {
       localStorage.setItem('queryIdentifierValue', queryIdentifierValue ? queryIdentifierValue : '')
       localStorage.setItem('queryKafkaOffset', queryKafkaOffset ? queryKafkaOffset : '')
       localStorage.setItem('queryKafkaTopic', queryKafkaTopic ? queryKafkaTopic : '')
       localStorage.setItem('queryIdentifierType', queryIdentifierType ? queryIdentifierType : '')
       if (queryIdentifierValue || queryKafkaOffset || queryKafkaTopic || queryIdentifierType) {
-        cancelTokenSource.cancel()
-        try {
-            setLoading(true)
-            /* Old API URL, not FaaS: https://api.fhirstation.net/api/v1/search/ */
-            await axios.post('https://api.fhirstation.net/function/seeker', {
-            cancelToken: cancelTokenSource.token,
-            search: {
-              queryIdentifierValue, queryKafkaOffset, queryKafkaTopic,
-              queryIdentifierType
-            },
-            queryId
-          })
-          .then(res => {
-            setData(res.data)
-            setLoading(false)
-          })
-        } catch(err) {
-          console.warn(err.message)
-          setLoading(false)
-        }
+        seeker('https://api.fhirstation.net/function/seeker')
       } else {
         setLoading(false)
         setData([])

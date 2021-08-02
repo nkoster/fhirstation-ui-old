@@ -11,6 +11,8 @@ import { Route, useLocation } from 'react-router-dom'
 import Details from '../pages/Details'
 import Timer from '../components/Timer'
 import { makeStyles } from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
 
 const LIMIT = 52
 
@@ -149,6 +151,15 @@ const Home = ({accessToken}) => {
 
   return (
     <div className="App">
+      <IconButton
+        style={{position: 'fixed', right: 3, top: 3, zIndex: 100}}
+        aria-label="more"
+        aria-controls="long-menu"
+        aria-haspopup="true"
+        onClick={_ => {}}
+      >
+        <MenuIcon />
+      </IconButton>
       <Route path="/details/:topic/:partition/:offset" component={Details} />
       {location.pathname === '/' &&
       <header className="App-header">

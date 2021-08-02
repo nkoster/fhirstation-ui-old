@@ -13,6 +13,10 @@ import Timer from '../components/Timer'
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import { eraseCookie } from '../utils/cookies'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 
 const LIMIT = 52
 
@@ -29,7 +33,7 @@ const theme = createMuiTheme({
 
 const cancelTokenSource = axios.CancelToken.source()
 
-const Home = ({accessToken}) => {
+const Home = ({accessToken, setTokens}) => {
 
   const useStyles = makeStyles({
     '@global': {
@@ -149,17 +153,60 @@ const Home = ({accessToken}) => {
     setQueryIdentifierType(localStorage.getItem('queryIdentifierType'))
   }, [])
 
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+
+  const handleClick = evt => {
+    setAnchorEl(evt.currentTarget)
+  }
+
+  const handleClose = _ => {
+    setAnchorEl(null)
+  }
+
+  const handleLogout = _ => {
+    eraseCookie('tokens')
+    setTokens({})
+  }
+
+  const options = [
+    'Logout'
+  ]
+
+  const ITEM_HEIGHT = 48
+
   return (
     <div className="App">
-      <IconButton
-        style={{position: 'fixed', right: 3, top: 3, zIndex: 100}}
-        aria-label="more"
-        aria-controls="long-menu"
-        aria-haspopup="true"
-        onClick={_ => {}}
+      <ClickAwayListener onClickAway={handleClose}>
+        <IconButton
+          style={{position: 'fixed', right: 1, top: 1, zIndex: 100}}
+          aria-label="more"
+          aria-controls="long-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MenuIcon />
+        </IconButton>
+      </ClickAwayListener>
+      <Menu
+        id="long-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: '20ch',
+          },
+        }}
       >
-        <MenuIcon />
-      </IconButton>
+        {options.map((option) => (
+          <MenuItem key='Logout' onClick={handleLogout}>
+            {option}
+          </MenuItem>
+        ))}
+      </Menu>
       <Route path="/details/:topic/:partition/:offset" component={Details} />
       {location.pathname === '/' &&
       <header className="App-header">

@@ -1,34 +1,27 @@
 import './App.css'
 import Home from './pages/Home'
-import { useRef, useEffect, useState } from 'react'
-import fhirDepartment1 from './pix/fire1.png'
+import Login from './pages/Login'
+import { getCookie } from './utils/cookies'
+import { useEffect, useState } from 'react'
 
 const App = _ => {
-  const [loading, setLoading] = useState(true)
-  const img1 = useRef()
-  useEffect(_ => {
-    setTimeout(_ => {
-      img1.current.style.height = '0px'
-      setTimeout(_ => {
-        img1.current.style.display = 'none'
-        setLoading(false)
-    }, 700)
-    }, 500)
-  }, [])
-  return (
-    <>
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-        <img ref={img1} style={fire1Style} src={fhirDepartment1} alt='FHIR department' />
-      </div>
-      {loading ? null : <Home />}
-    </>
-  )
-}
 
-const fire1Style = {
-  padding: 0, margin: 0,
-  height: 300,
-  transition: 'height 0.7s'
+  const [Tokens, setTokens] = useState({})
+
+  const getTokens = tokens => setTokens(tokens)
+
+  useEffect(_ => {
+    const cookie = getCookie('tokens')
+    if (!cookie) return
+    const tokens = JSON.parse(cookie)
+    if (tokens) setTokens(tokens)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (!Tokens.accessToken) return <Login getTokens={getTokens} />
+
+  return <Home accesToken={Tokens.accessToken} />
+
 }
 
 export default App

@@ -64,7 +64,7 @@ const Details = props => {
 
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
-      <div style={{position: 'fixed', left: 3, top: 3, zIndex: 100}}>
+      <div style={{position: 'fixed', left: 1, top: 1, zIndex: 100}}>
         <ThemeProvider theme={theme}>
         <IconButton
           color='default' 

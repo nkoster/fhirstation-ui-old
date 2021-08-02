@@ -27,7 +27,7 @@ const theme = createMuiTheme({
 
 const cancelTokenSource = axios.CancelToken.source()
 
-const Home = _ => {
+const Home = ({accessToken}) => {
 
   const useStyles = makeStyles({
     '@global': {
@@ -80,20 +80,28 @@ const Home = _ => {
 
   useEffect(async _ => {
     try {
-      const response = await axios.post('https://api.fhirstation.net/function/topiclister')
+      const config = {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      }
+      const response = await axios.post(
+        'https://api.fhirstation.net/function/topiclister',
+        config
+      )
       let list = response.data.map(i => i.kafka_topic)
       list.unshift('')
       setTopicList(list.sort())
     } catch(err) {
       console.log(err.message)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const seeker = async url => {
     cancelTokenSource.cancel()
     try {
-        setLoading(true)
-        await axios.post(url, {
+      setLoading(true)
+      await axios.post(url, {
+        headers: { Authorization: `Bearer ${accessToken}` },
         cancelToken: cancelTokenSource.token,
         search: {
           queryIdentifierValue, queryKafkaOffset, queryKafkaTopic,

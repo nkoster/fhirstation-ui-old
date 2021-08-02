@@ -33,7 +33,7 @@ const theme = createMuiTheme({
 
 const cancelTokenSource = axios.CancelToken.source()
 
-const Home = ({accessToken, setTokens}) => {
+const Home = ({Tokens, setTokens}) => {
 
   const useStyles = makeStyles({
     '@global': {
@@ -87,7 +87,7 @@ const Home = ({accessToken, setTokens}) => {
   useEffect(async _ => {
     try {
       const config = {
-        headers: { Authorization: `Bearer ${accessToken}` }
+        headers: { Authorization: `Bearer ${Tokens.accessToken}` }
       }
       const response = await axios.post(
         'https://api.fhirstation.net/function/topiclister',
@@ -107,7 +107,7 @@ const Home = ({accessToken, setTokens}) => {
     try {
       setLoading(true)
       await axios.post(url, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${Tokens.accessToken}` },
         cancelToken: cancelTokenSource.token,
         search: {
           queryIdentifierValue, queryKafkaOffset, queryKafkaTopic,
@@ -170,7 +170,7 @@ const Home = ({accessToken, setTokens}) => {
   }
 
   const options = [
-    'Logout'
+    `Logout ${Tokens.username}`
   ]
 
   const ITEM_HEIGHT = 48

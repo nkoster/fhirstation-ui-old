@@ -20,7 +20,7 @@ const App = _ => {
 
   if (!Tokens.accessToken) return <Login getTokens={getTokens} />
 
-  return <Home accesToken={Tokens.accessToken} />
+  return <Home accesToken={Tokens.accessToken} setTokens={setTokens} />
 
 }
 
